@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBnUxufFi8ZMxxkK-IXwrIFXaggE96b0zE",
-  authDomain: "drp-47.firebaseapp.com",
-  projectId: "drp-47",
-  storageBucket: "drp-47.appspot.com",
-  messagingSenderId: "57267009849",
-  appId: "1:57267009849:web:e219170cfceca1f2b490e8"
+  apiKey: "AIzaSyA7oW6d2x5czl-VdIqDnPoG2epEbrSDSUw",
+  authDomain: "drp-vue.firebaseapp.com",
+  projectId: "drp-vue",
+  storageBucket: "drp-vue.appspot.com",
+  messagingSenderId: "769443412052",
+  appId: "1:769443412052:web:c2728dff0b759e8fe795c1"
 };
 
 // Initialize Firebase
