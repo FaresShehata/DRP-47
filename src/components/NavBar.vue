@@ -1,7 +1,7 @@
 <template>
   <nav>
     <RouterLink to="/">Go to Home</RouterLink>
-    <RouterLink to='/add'>Add Societies</RouterLink>
+    <RouterLink to='/search'>Search Societies</RouterLink>
     <RouterLink to="/my-societies">My Societies</RouterLink>
     <!-- <button @click="navigateTo('AddPage')">AddPage</button>
     <button @click="navigateTo('MySocieties')">My Societies</button> -->
@@ -24,11 +24,5 @@ RouterLink {
 </style>
 
 <script>
-export default {
-  methods: {
-    goTo(path) {
-      this.$router.push(path)
-    },
-  },
-}
+
 </script>
