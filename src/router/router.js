@@ -2,6 +2,8 @@ import { createWebHistory, createRouter } from 'vue-router'
 import MySocieties from '../views/MySocieties.vue'
 import HomePage from '../views/HomePage.vue'
 import SearchPage from '../views/SearchPage.vue'
+import SocietyEvents from '../views/SocietyEvents.vue'
+import SingleEvent from '../views/SingleEvent.vue'
 
 
 const routes = [
@@ -19,6 +21,16 @@ const routes = [
     path: '/my-societies',
     name: 'MySocieties',
     component: MySocieties
+  },
+  {
+    path: '/societies/:name/events',
+    name: 'Society Events',
+    component: SocietyEvents
+  },
+  {
+    path: '/societies/:name/events/:eventid',
+    name: 'Single Event',
+    component: SingleEvent
   }
 ]
 

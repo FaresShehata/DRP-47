@@ -6,7 +6,9 @@
       <div class="scrollable-header">University Societies</div>
       <div class="scrollable-list">
         <ul v-for="society in societies" :key="society.id">
-          <li class="society-item">{{ society.name }}</li>
+          <li class="society-item">
+            <RouterLink :to='`/societies/${society.name}/events`'>{{ society.name }}</RouterLink>
+          </li>
         </ul>
       </div>
     </div>
@@ -58,7 +60,7 @@ onMounted(async () => {
 }
 
 .scrollable-header {
-  background-color: #4CAF50;
+  background-color: #808080;
   color: white;
   padding: 10px;
   text-align: center;
