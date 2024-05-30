@@ -1,11 +1,5 @@
 <template>
-    <!-- <header>
-      <h1>{{ currentSection }}</h1>
-    </header> -->
-    <main>
-      <router-view></router-view>
-    </main>
-
+  <RouterView></RouterView>
 </template>
 
 <script>
@@ -16,14 +10,12 @@
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 98vh;
   justify-content: space-between;
   text-align: center;
+  margin: 0
 }
-header {
-  background-color: #f8f9fa;
-  padding: 1em;
-}
+
 main {
   flex-grow: 1;
 }
