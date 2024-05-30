@@ -1,26 +1,37 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="PLEASE"/>
+    <!-- <header>
+      <h1>{{ currentSection }}</h1>
+    </header> -->
+    <main>
+      <router-view></router-view>
+    </main>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
+header {
+  background-color: #f8f9fa;
+  padding: 1em;
+}
+main {
+  flex-grow: 1;
+}
+/* nav {
+  background-color: #e9ecef;
+  padding: 1em;
+  display: flex;
+  justify-content: space-around;
+} */
+
 </style>
