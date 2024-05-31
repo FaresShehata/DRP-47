@@ -31,7 +31,9 @@ const routes = [
     path: '/societies/:name/events/:eventid',
     name: 'Single Event',
     component: SingleEvent
-  }
+  },
+  // default
+  { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
 const router = createRouter({
