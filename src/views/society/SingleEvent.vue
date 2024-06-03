@@ -108,6 +108,7 @@ onMounted(async () => {
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 5px;
+  width: min(500px, 80vw);
 }
 
 .single-event .details {

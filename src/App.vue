@@ -9,6 +9,7 @@
 <style>
 .app {
   text-align: center;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   display: flex;
@@ -18,6 +19,7 @@
   height: 100vh;
   overflow-y: hidden;
 }
+
 body {
   margin: 0;
 }

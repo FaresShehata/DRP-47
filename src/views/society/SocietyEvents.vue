@@ -46,7 +46,7 @@ onMounted(async () => {
   const res = []
   squerySnapshot.forEach(doc => res.push(doc.id))
 
-  if (res.length == 0) return;
+  if (res.length !== 1) return;
 
   id.value = res[0]
   // console.log(id.value)
@@ -63,11 +63,7 @@ onMounted(async () => {
 
 
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-}
+<style scoped>
 
 h1 {
   height: 5rem;
@@ -75,6 +71,7 @@ h1 {
   margin: 0;
   padding: 1rem;
 }
+
 .event {
   all: unset;
   text-decoration: none;
@@ -83,7 +80,7 @@ h1 {
   padding: 20px;
   /* margin-bottom: 20px; */
   border-radius: 5px;
-  max-width: 500px;
+  width: min(80vw, 500px);
   cursor: pointer;
 }
 
