@@ -15,12 +15,14 @@ nav {
   padding: 1em;
   display: flex;
   justify-content: space-around;
-  bottom: 0px;
+  bottom: 0;
+  width: 100vw;
   position: fixed;
+  margin: 0;
 }
 
 RouterLink {
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
   font-size: 16px;
 }
 </style>
