@@ -15,6 +15,8 @@ nav {
   padding: 1em;
   display: flex;
   justify-content: space-around;
+  bottom: 0px;
+  position: fixed;
 }
 
 RouterLink {
