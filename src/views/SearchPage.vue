@@ -1,74 +1,73 @@
 <template>
   <div class="app">
     <h2>Search Societies</h2>
-    <!-- <ul class="societies-list"> -->
     <div class="scrollable-container">
       <div class="scrollable-header">University Societies</div>
       <div class="scrollable-list">
-        <ul v-for="society in societies" :key="society.id">
-          <li class="society-item">
+        <ul>
+          <li v-for="society in societies" :key="society.id" class="society-item">
             <RouterLink :to='`/societies/${society.name}/events`'>{{ society.name }}</RouterLink>
           </li>
         </ul>
       </div>
     </div>
-
     <NavBar></NavBar>
   </div>
 </template>
 
 <script setup>
-import NavBar from "../components/NavBar.vue"
+import NavBar from "../components/NavBar.vue";
 import { ref, onMounted } from "vue";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '@/firebase';
 
-const societies = ref([])
-
+const societies = ref([]);
 
 onMounted(async () => {
-  const querySnapshot = await getDocs(collection(db, "societies"))
-  const dbsocieties = []
+  const querySnapshot = await getDocs(collection(db, "societies"));
+  const dbsocieties = [];
 
   querySnapshot.forEach(doc =>
     dbsocieties.push({
       id: doc.id,
       name: doc.data().name
-  }))
+  }));
   
-  dbsocieties.sort((a, b) => a.name < b.name ? -1 : 1)
+  dbsocieties.sort((a, b) => a.name < b.name ? -1 : 1);
   
-  societies.value = dbsocieties
-})
-
-
-// societies.value = societies.value;
-
+  societies.value = dbsocieties;
+});
 </script>
 
-
 <style>
+.app {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
 .scrollable-container {
-  width: 70%;
-  max-width: 800px;
-  background-color: white;
+  width: 90vw;
+  height: min(800px, 80vh);
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
   margin: 20px auto;
-  /* Centering the container */
 }
 
 .scrollable-header {
-  background-color: #808080;
+  background-color: #e777e4;
   color: white;
-  padding: 10px;
+  padding: 15px;
   text-align: center;
   font-size: 24px;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
 }
 
 .scrollable-list {
-  height: 500px;
+  max-height: min(800px, 80vh);
   overflow-y: auto;
   padding: 20px;
 }
@@ -76,14 +75,30 @@ onMounted(async () => {
 .scrollable-list ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .scrollable-list li {
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  transition: background-color 0.3s;
 }
 
 .scrollable-list li:last-child {
   border-bottom: none;
+}
+
+.scrollable-list li:hover {
+  background-color: #f1f1f1;
+}
+
+.scrollable-list a {
+  text-decoration: none;
+  color: #401b5c;
+  font-size: 18px;
+}
+
+.scrollable-list a:hover {
+  text-decoration: underline;
 }
 </style>
