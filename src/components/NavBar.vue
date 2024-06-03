@@ -9,7 +9,7 @@
 </template>
 
 
-<style>
+<style scoped>
 nav {
   background-color: #e9ecef;
   padding: 1em;

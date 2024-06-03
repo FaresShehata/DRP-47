@@ -2,8 +2,10 @@ import { createWebHistory, createRouter } from 'vue-router'
 import MySocieties from '../views/MySocieties.vue'
 import HomePage from '../views/HomePage.vue'
 import SearchPage from '../views/SearchPage.vue'
-import SocietyEvents from '../views/SocietyEvents.vue'
-import SingleEvent from '../views/SingleEvent.vue'
+import SocietyEvents from '../views/society/SocietyEvents.vue'
+import SingleEvent from '../views/society/SingleEvent.vue'
+import SocietyAbout from '../views/society/SocietyAbout.vue'
+import SocietyAnnouncements from '../views/society/SocietyAnnouncements.vue'
 
 
 const routes = [
@@ -31,6 +33,16 @@ const routes = [
     path: '/societies/:name/events/:eventid',
     name: 'Single Event',
     component: SingleEvent
+  },
+  {
+    path: '/societies/:name/announcements',
+    name: 'Announcements',
+    component: SocietyAnnouncements
+  },
+  {
+    path: '/societies/:name/about',
+    name: 'About',
+    component: SocietyAbout
   },
   // default
   { path: '/:pathMatch(.*)*', redirect: '/' }

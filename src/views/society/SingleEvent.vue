@@ -30,7 +30,7 @@ import { useRoute } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, onSnapshot, query, where, /* setDoc, */ doc, runTransaction } from "firebase/firestore";
 import { db } from '@/firebase';
-import NavBar from "../components/NavBar.vue"
+import NavBar from "../../components/NavBar.vue"
 const route = useRoute()
 
 // const name = route.params.name
