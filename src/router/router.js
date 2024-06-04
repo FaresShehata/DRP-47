@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import MySocieties from '../views/MySocieties.vue'
-import HomePage from '../views/HomePage.vue'
+import HomePageAnnouncements from '../views/HomePageAnnouncements.vue'
+import HomePageEvents from '../views/HomePageEvents.vue'
 import SearchPage from '../views/SearchPage.vue'
 import SocietyEvents from '../views/society/SocietyEvents.vue'
 import SingleEvent from '../views/society/SingleEvent.vue'
@@ -11,8 +12,17 @@ import SocietyAnnouncements from '../views/society/SocietyAnnouncements.vue'
 const routes = [
   {
     path: '/',
-    name: 'HomePage',
-    component: HomePage
+    redirect: '/announcements'
+  },
+  {
+    path: '/announcements',
+    name: 'Home Announcements',
+    component: HomePageAnnouncements
+  },
+  {
+    path: '/events',
+    name: 'Home Events',
+    component: HomePageEvents
   },
   {
     path: '/search',

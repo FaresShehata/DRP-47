@@ -13,8 +13,9 @@
 nav {
   background-color: #e9ecef;
   padding: 1em;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 10px;
   bottom: 0;
   width: 100vw;
   position: fixed;
