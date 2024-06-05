@@ -1,19 +1,22 @@
 <template>
   <nav>
-    <RouterLink :to="`/societies/${societyName}/announcements`">Announcements</RouterLink>
-    <RouterLink :to="`/societies/${societyName}/events`">Events</RouterLink>
-    <RouterLink :to="`/societies/${societyName}/about`">About</RouterLink>
+    <RouterLink :to="`/societies/${societyName}/announcements`" class="tab-link"
+    active-class="active-tab">Announcements</RouterLink>
+    <RouterLink :to="`/societies/${societyName}/events`" class="tab-link"
+    active-class="active-tab">Events</RouterLink>
+    <RouterLink :to="`/societies/${societyName}/about`" class="tab-link"
+    active-class="active-tab">About</RouterLink>
   </nav>
 </template>
 
 <style scoped>
 nav {
   background-color: #e9ecef;
-  left: -1rem;
+  left: -0.7rem;
   padding: 1rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  top: 5rem;
+  top: 4rem;
   width: 100vw;
   position: fixed;
   margin: 0;
@@ -25,6 +28,8 @@ RouterLink {
   font-size: 16px;
   margin: 0;
 }
+
+
 </style>
 
 <script setup>

@@ -1,8 +1,12 @@
 <template>
   <nav>
-    <RouterLink to="/">Go to Home</RouterLink>
-    <RouterLink to='/search'>Search Societies</RouterLink>
-    <RouterLink to="/my-societies">My Societies</RouterLink>
+    <RouterLink to="/" class="tab-link"
+    active-class="active-tab">Go to Home</RouterLink>
+    
+    <RouterLink to='/search' class="tab-link"
+    active-class="active-tab">Search Societies</RouterLink>
+    <RouterLink to="/my-societies" class="tab-link"
+    active-class="active-tab">My Societies</RouterLink>
     <!-- <button @click="navigateTo('AddPage')">AddPage</button>
     <button @click="navigateTo('MySocieties')">My Societies</button> -->
   </nav>
@@ -12,6 +16,7 @@
 <style scoped>
 nav {
   background-color: #e9ecef;
+  left: -0.7rem;
   padding: 1em;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
