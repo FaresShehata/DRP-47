@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
-connectFirestoreEmulator(db, '127.0.0.1', 8080);
+// connectFirestoreEmulator(db, '127.0.0.1', 8080);
 
 // const uid = "oQJOE3DLYUiW9x2WxEeY"
 const uid = "cZVrnFwfT8iWLngs2nss"
