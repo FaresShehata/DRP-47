@@ -1,7 +1,9 @@
 <template>
   <nav>
-    <RouterLink :to="`/announcements`">Announcements</RouterLink>
-    <RouterLink :to="`/events`">Events</RouterLink>
+    <RouterLink :to="`/announcements`" class="tab-link"
+    active-class="active-tab">Announcements</RouterLink>
+    <RouterLink :to="`/events`" class="tab-link"
+    active-class="active-tab">Events</RouterLink>
   </nav>
 </template>
 
@@ -12,7 +14,7 @@ nav {
   padding: 1rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  top: 5rem;
+  top: 3.7rem;
   width: 100vw;
   position: fixed;
   margin: 0;

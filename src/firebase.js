@@ -20,8 +20,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // connectFirestoreEmulator(db, '127.0.0.1', 8080);
 
-// const uid = "oQJOE3DLYUiW9x2WxEeY"
-const uid = "cZVrnFwfT8iWLngs2nss"
+const uid = "oQJOE3DLYUiW9x2WxEeY" // online database
+// const uid = "cZVrnFwfT8iWLngs2nss" // local database
 console.log(uid)
 
 export { db, uid }

@@ -1,20 +1,21 @@
 <template>
   <nav>
-    <RouterLink to="/" class="tab-link"
+    <RouterLink to="/announcements" class="tab-link"
     active-class="active-tab">Go to Home</RouterLink>
     
     <RouterLink to='/search' class="tab-link"
     active-class="active-tab">Search Societies</RouterLink>
+    
     <RouterLink to="/my-societies" class="tab-link"
     active-class="active-tab">My Societies</RouterLink>
-    <!-- <button @click="navigateTo('AddPage')">AddPage</button>
-    <button @click="navigateTo('MySocieties')">My Societies</button> -->
   </nav>
 </template>
 
 
 <style scoped>
 nav {
+  text-align: center;
+  font-family: Arial, sans-serif;
   background-color: #e9ecef;
   left: -0.7rem;
   padding: 1em;
@@ -34,5 +35,6 @@ RouterLink {
 </style>
 
 <script>
-
+// NKjrJ3Y6RIjJAouNHjH7
+// odsgQ1MWcM1KWxgPuo3e
 </script>

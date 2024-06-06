@@ -34,6 +34,7 @@ console.log(about.value)
 console.log(router)
 
 onMounted(async () => {
+
   const sq = query(collection(db, "societies"), where("name", "==", name))
   const squerySnapshot = await getDocs(sq);
   const sres = []

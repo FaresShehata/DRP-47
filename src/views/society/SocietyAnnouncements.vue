@@ -6,7 +6,8 @@
       <h1>{{ $route.params.name }}</h1>
       <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
       <div class="announcements-container">
-        <div class="announcements-list" v-for="a in announcements" :key="a.title">
+        <div class="no-announcements" v-if="announcements.length == 0">Nothing here yet...</div>
+        <div v-else class="announcements-list" v-for="a in announcements" :key="a.title">
           <div class="announcement">
             <h2>{{ a.title }}</h2>
             <div class="details">
@@ -81,6 +82,15 @@ h1 {
   margin: auto;
   /* margin-bottom: 20px; */
   border-radius: 5px;
+  width: min(80vw, 500px);
+}
+
+.no-announcements {
+  font-size: larger;
+  text-align: left;
+  color: black;
+  padding: 20px;
+  margin: auto;
   width: min(80vw, 500px);
 }
 

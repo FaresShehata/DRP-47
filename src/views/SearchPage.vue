@@ -12,11 +12,14 @@
       </select>
     </div>
     <div class="scrollable-container">
-      <div class="scrollable-header">University Societies</div>
+      <!-- <div class="scrollable-header">University Societies</div> -->
       <div class="scrollable-list">
         <ul>
           <li v-for="society in filteredSocieties" :key="society.id" class="society-item">
-            <RouterLink :to="`/societies/${society.name}/events`">{{ society.name }}</RouterLink>
+            <RouterLink class="society-entry" :to="`/societies/${society.name}/events`">
+              <div>{{ society.name }}</div>
+              <div>{{ society.category }}</div>
+            </RouterLink>
           </li>
         </ul>
         <p v-if="filteredSocieties.length === 0 && searchTerm !== ''">No results found for "{{ searchTerm }}"</p>
@@ -65,6 +68,7 @@ onMounted(async () => {
   dbSocieties.sort((a, b) => (a.name < b.name ? -1 : 1));
 
   societies.value = dbSocieties;
+  // societies.value = Array(50).fill({id: "test", name:"test", category:"asdgyu"});
   categories.value = Array.from(dbCategories).sort();
 });
 
@@ -72,14 +76,10 @@ onMounted(async () => {
 
 
 <style scoped>
-.app {
-  text-align: center;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
 
 .search-container {
   margin-bottom: 20px;
+  width: 60vw
 }
 
 .filter-container {
@@ -87,16 +87,18 @@ onMounted(async () => {
 }
 
 .scrollable-container {
-  width: 90vw;
-  height: calc(90vh - 10rem);
+  width: min(80vw, 600px);
+  height: calc(90vh - 15rem);
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 5;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
-  overflow: auto;
+  overflow: fix;
   margin: 20px auto;
 }
 
-.scrollable-header {
+/* .scrollable-header {
+  width: 90vw;
   background-color: #e777e4;
   color: white;
   padding: 15px;
@@ -104,10 +106,11 @@ onMounted(async () => {
   font-size: 24px;
   font-weight: bold;
   border-radius: 8px 8px 0 0;
-}
+
+} */
 
 .scrollable-list {
-  height: calc(90vh - 13rem);
+  height: 100%;
   overflow-y: auto;
   padding: 20px;
 }
@@ -141,5 +144,13 @@ onMounted(async () => {
 .scrollable-list a:hover {
   text-decoration: underline;
 }
+
+.society-entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 </style> 
 

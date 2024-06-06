@@ -8,7 +8,7 @@
       <div class="announcements-container">
         <div class="announcements-list" v-for="a in announcements" :key="a.id">
           <div class="announcement">
-            <h2>{{ a.title }}</h2>
+            <h2>{{ a.title }}: {{ a.societyName }}</h2>
             <div class="details">
               <span>Date & Time:</span>{{ a.dateTime?.toDate() }}<br>
               {{ a.body }}
@@ -26,36 +26,32 @@
 import NavBar from "../components/NavBar.vue"
 import HomePageNav from "../components/HomePageNav.vue"
 import { onMounted, ref } from 'vue'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { doc, getDoc, getDocs, query, collection, where, orderBy } from "firebase/firestore";
 import { db, uid } from '@/firebase';
 
 const announcements = ref([])
 
 onMounted(async () => {
-  // const userDoc = await getDoc(doc(db, "users", uid))
+  const userDoc = await getDoc(doc(db, "users", uid))
+  const societies = userDoc.data().societies
+  const societyIDs = societies.map(s => s.id)
 
-  const aq = query(collection(db, "announcements"), where("members", "array-contains", uid))
+  console.log(userDoc)
+
+  const aq = query(
+    collection(db, "announcements"),
+    where("societyID", "in", societyIDs),
+    orderBy("dateTime", "desc")
+  )
   const aquerySnapshot = await getDocs(aq);
+
+  console.log(aquerySnapshot)
 
   const ares = []
   aquerySnapshot.forEach(doc => ares.push({ id: doc.id, ...doc.data() }))
-  // console.log("eres", eres)
-  console.log(ares)
+
   announcements.value = ares
-
-  
-
-  // if (sres.length !== 1) return
-  // id.value = sres[0]
-
-  // const aq = query(collection(db, "announcements"), where("societyID", "==", id.value))
-
-  // const aquerySnapshot = await getDocs(aq);
-  // const ares = []
-  // aquerySnapshot.forEach(doc => ares.push({ id: doc.id, ...doc.data() }))
-  // // console.log("eres", eres)
-  // announcements.value = ares
-
+  console.log(ares)
 
 })
 
@@ -103,7 +99,7 @@ h1 {
 .announcements-container {
   /* top: 10rem; */
   width: 100vw;
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 12.6rem);
   border: 1px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
