@@ -1,7 +1,7 @@
 <template>
   <nav>
     <RouterLink to="/announcements" class="tab-link"
-    active-class="active-tab">Go to Home</RouterLink>
+    active-class="active-tab">Home</RouterLink>
     
     <RouterLink to='/search' class="tab-link"
     active-class="active-tab">Search Societies</RouterLink>
@@ -10,7 +10,6 @@
     active-class="active-tab">My Societies</RouterLink>
   </nav>
 </template>
-
 
 <style scoped>
 nav {

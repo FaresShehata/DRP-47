@@ -4,6 +4,7 @@
 
     <div v-else>
       <h1>{{ $route.params.name }}</h1>
+      <JoinSociety :id="id" :society-name="name"></JoinSociety>
       <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
       <div class="announcements-container">
         <div class="no-announcements" v-if="announcements.length == 0">Nothing here yet...</div>
@@ -30,6 +31,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
+import JoinSociety from "../../components/JoinSociety.vue"
 const route = useRoute()
 const router = useRouter()
 

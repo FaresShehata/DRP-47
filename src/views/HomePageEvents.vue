@@ -1,11 +1,16 @@
 <template>
   <div class="app">
     <h1>Recent Events</h1>
+   <!-- <RouterLink to="/calendar" class="calendar-button"
+    active-class="active-tab" @click="goToCalendar()"><i class="fas fa-calendar-alt"></i></RouterLink> -->
     <HomePageNav></HomePageNav>
     <div class="events-container">
       <div class="events-list" v-for="e in events" :key="e.id">
         <button @click="router.push(`/societies/${e.societyName}/events/${e.id}`)"  class="event">
-          <h2>{{ e.title }}: {{ e.societyName }}</h2>
+          <div class="event-title">
+            <h2>{{ e.title }}</h2>
+            <p class="society-name">{{ e.societyName }}</p>
+          </div>
           
           <div class="details">
             <span>Capacity:</span>{{ e.capacity }}<br>
@@ -13,6 +18,7 @@
             <span>Date & Time:</span>{{ e.dateTime?.toDate() }}<br>
             {{ e.description }}
           </div>
+          
         </button>
       </div>
     </div>
@@ -33,6 +39,9 @@ import { db, uid } from '@/firebase';
 const router = useRouter()
 
 const events = ref([])
+
+// const goToCalendar = () => {
+//   router.push('/calendar'); }
 
 onMounted(async () => {
   const userDoc = await getDoc(doc(db, "users", uid))
@@ -58,16 +67,40 @@ onMounted(async () => {
 
 })
 
+
+
 </script>
 
 
 <style scoped>
+/*
 h1 {
   height: 5rem;
   background-color: white;
   margin: 0;
   padding: 1rem;
 
+} */
+
+.calendar-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  width: 40px;  /* You can adjust this size */
+  height: 40px; /* You can adjust this size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 10px;
+  padding: 0;
+}
+
+.calendar-button:hover {
+  color : #414142;
 }
 
 .event {
@@ -87,6 +120,22 @@ h1 {
 .event h2 {
   margin-top: 0;
   /* text-align: left; */
+}
+
+.event-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.event-title * {
+  margin-top: 0;
+  /* font-size: 1.5rem; */
+}
+
+.society-name {
+  font-size: 1.3rem;
+  color: rgb(93, 93, 93);
 }
 
 .event .details {

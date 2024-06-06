@@ -8,6 +8,7 @@ import SingleEvent from '../views/society/SingleEvent.vue'
 import SocietyAbout from '../views/society/SocietyAbout.vue'
 import SocietyAnnouncements from '../views/society/SocietyAnnouncements.vue'
 import ErrorPage from '../views/ErrorPage.vue'
+// import CalendarMonth from '../views/CalendarComponents/CalendarMonth.vue'
 
 const routes = [
   
@@ -58,7 +59,12 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     component: ErrorPage
-  }
+  },
+  // {
+  //   path: '/calendar',
+  //   name: 'Calendar',
+  //   component: CalendarMonth
+  // }
 ]
 
 const router = createRouter({

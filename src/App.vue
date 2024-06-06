@@ -44,6 +44,15 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   transform: translateY(1px); /* Slightly push the button down */
 }
+
+h1 {
+  font-size: min(7vh, 22px);
+  height: 5rem;
+  background-color: white;
+  margin: 0;
+  padding: 1rem;
+
+}
 /* nav {
   background-color: #e9ecef;
   padding: 1em;

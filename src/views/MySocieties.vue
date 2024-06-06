@@ -37,7 +37,7 @@ onMounted(async () => {
   
   const userDoc = await getDoc(doc(db, "users", uid))
   const societies = userDoc.data().societies
-  userSocieties.value = societies
+  userSocieties.value = societies.sort((a, b) => b.name < a.name ? 1 : -1)
   console.log(societies)
   // const societyIDs = societies.map(s => s.id)
   

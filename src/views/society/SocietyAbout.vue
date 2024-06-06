@@ -4,6 +4,7 @@
 
     <div v-else>
       <h1>{{ name }}</h1>
+      <JoinSociety :id="id" :society-name="name"></JoinSociety>
       <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
         <div class="about">
           <h2>About</h2>
@@ -22,6 +23,7 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
+import JoinSociety from "../../components/JoinSociety.vue"
 const route = useRoute()
 const router = useRouter()
 

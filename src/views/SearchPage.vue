@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h2>Search Societies</h2>
+
     <div class="search-container">
       <input type="text" id="search-bar" v-model="searchTerm" placeholder="Search societies">
     </div>
@@ -12,7 +12,6 @@
       </select>
     </div>
     <div class="scrollable-container">
-      <!-- <div class="scrollable-header">University Societies</div> -->
       <div class="scrollable-list">
         <ul>
           <li v-for="society in filteredSocieties" :key="society.id" class="society-item">
@@ -76,21 +75,48 @@ onMounted(async () => {
 
 
 <style scoped>
-
 .search-container {
+  top: 2vh;
   margin-bottom: 20px;
-  width: 60vw
+  width: 60vw;
+  position: relative;
+}
+
+#search-bar {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 50px; /* Rounded corners */
+  background-color: #fff; /* White background */
+  color: #000; /* Black text */
+  outline: none; /* Remove default outline */
+  font-size: 16px;
+  transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+
+#search-bar::placeholder {
+  color: #8899a6; /* Placeholder text color */
+}
+
+#search-bar:focus {
+  border-color: #1da1f2; /* Border color on focus */
 }
 
 .filter-container {
-  margin: 20px 0;
+  padding: 20px;
+  position: relative;
+  top: 3.5rem;
+
 }
 
 .scrollable-container {
+  padding: 10px;
   width: min(80vw, 600px);
   height: calc(90vh - 15rem);
   background-color: #ffffff;
-  border: 5;
+  border: 1px;
+  border-color: #000;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   border-radius: 8px;
   overflow: fix;

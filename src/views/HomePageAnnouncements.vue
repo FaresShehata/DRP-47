@@ -3,12 +3,20 @@
     <div v-if="false">Something Went Wrong</div>
 
     <div v-else>
-      <h1>Recent Announcements</h1>
+      <div class="header">
+        <h1>Recent Announcements</h1>
+        <!-- <RouterLink to="/calendar" class="calendar-button"
+    active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink> -->      
+      </div>
       <HomePageNav></HomePageNav>
       <div class="announcements-container">
         <div class="announcements-list" v-for="a in announcements" :key="a.id">
           <div class="announcement">
-            <h2>{{ a.title }}: {{ a.societyName }}</h2>
+            <div class="announcement-title">
+              <h2>{{ a.title }}</h2>
+              <p class="society-name">{{ a.societyName }}</p>
+            </div>
+            
             <div class="details">
               <span>Date & Time:</span>{{ a.dateTime?.toDate() }}<br>
               {{ a.body }}
@@ -23,6 +31,8 @@
 </template>
 
 <script setup>
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 import NavBar from "../components/NavBar.vue"
 import HomePageNav from "../components/HomePageNav.vue"
 import { onMounted, ref } from 'vue'
@@ -60,13 +70,32 @@ onMounted(async () => {
 
 <style scoped>
 
+.calendar-button {
+  background: none;
+  text-decoration: none;
+  text-align: right;
+  border: none;
+  padding: 0vh;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 10px;
+  font-size: min(7vw, 40px);
+}
+
+.calendar-button:hover {
+  color: #414142;
+}
+
+/*
 h1 {
+  font-size: min(4vh, 30px);
   height: 5rem;
   background-color: white;
   margin: 0;
   padding: 1rem;
 
-}
+} */
 
 .announcement {
   text-decoration: none;
@@ -80,10 +109,24 @@ h1 {
   width: min(80vw, 500px);
 }
 
-.announcement h2 {
-  margin-top: 0;
-  /* text-align: left; */
+.announcement-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.announcement-title * {
+  margin-top: 0;
+  /* font-size: 1.5rem; */
+}
+
+.society-name {
+  font-size: 1.3rem;
+  color: rgb(93, 93, 93);
+}
+
+
+
 
 .announcement .details {
   margin-bottom: 10px;
