@@ -7,9 +7,10 @@ import SocietyEvents from '../views/society/SocietyEvents.vue'
 import SingleEvent from '../views/society/SingleEvent.vue'
 import SocietyAbout from '../views/society/SocietyAbout.vue'
 import SocietyAnnouncements from '../views/society/SocietyAnnouncements.vue'
-
+import ErrorPage from '../views/ErrorPage.vue'
 
 const routes = [
+  
   {
     path: '/',
     redirect: '/announcements'
@@ -54,8 +55,10 @@ const routes = [
     name: 'About',
     component: SocietyAbout
   },
-  // default
-  { path: '/:pathMatch(.*)*', redirect: '/' }
+  {
+    path: '/:pathMatch(.*)*',
+    component: ErrorPage
+  }
 ]
 
 const router = createRouter({
