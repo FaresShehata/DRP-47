@@ -15,7 +15,7 @@
           <div class="details">
             <span>Capacity:</span>{{ e.capacity }}<br>
             <span>Attending:</span>{{ e.attending }}<br>
-            <span>Date & Time:</span>{{ e.dateTime?.toDate() }}<br>
+            <span>Date & Time:</span>{{ formatDate(e.dateTime?.toDate()) }}<br>
             {{ e.description }}
           </div>
           
@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import {formatDate} from "@/main.js"
 import NavBar from "../components/NavBar.vue"
 import HomePageNav from "../components/HomePageNav.vue"
 import { onMounted, ref } from 'vue'

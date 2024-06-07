@@ -12,7 +12,7 @@
           <div class="announcement">
             <h2>{{ a.title }}</h2>
             <div class="details">
-              <span>Date & Time:</span>{{ a.dateTime?.toDate() }}<br>
+              <span>Date & Time:</span>{{ formatDate(a.dateTime?.toDate()) }}<br>
               {{ a.body }}
             </div>
           </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+import {formatDate} from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";

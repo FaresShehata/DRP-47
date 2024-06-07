@@ -14,7 +14,7 @@
             <div class="details">
               <span>Capacity:</span>{{ event.capacity }}<br>
               <span>Attending:</span>{{ event.attending }}<br>
-              <span>Date & Time:</span>{{ event.dateTime?.toDate() }}<br>
+              <span>Date & Time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
             </div>
             <p>{{ event.description }}</p>
           </button>
@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import {formatDate} from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -60,6 +61,7 @@ onMounted(async () => {
   // console.log("eres", eres)
   events.value = eres
 })
+
 
 </script>
 

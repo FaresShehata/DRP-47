@@ -11,7 +11,7 @@
           <div class="details">
             <span>Capacity:</span>{{ event.capacity }}<br>
             <span>Attending:</span>{{ event.attending }}<br>
-            <span>Date & Time:</span>{{ event.dateTime.toDate() }}<br>
+            <span>Date & Time:</span>{{ formatDate(event.dateTime.toDate()) }}<br>
           </div>
           <p>{{ event.description }}</p>
           <button class="attend-button" :class="attending ? 'attending' : 'not-attending'" @click="addAttendee()">
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-
+import {formatDate} from "@/main.js"
 import { useRoute } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, onSnapshot, query, where, /* setDoc, */ doc, runTransaction } from "firebase/firestore";

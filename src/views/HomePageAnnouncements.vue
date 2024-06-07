@@ -18,7 +18,7 @@
             </div>
             
             <div class="details">
-              <span>Date & Time:</span>{{ a.dateTime?.toDate() }}<br>
+              <span>Date & Time:</span>{{ formatDate(a.dateTime?.toDate()) }}<br>
               {{ a.body }}
             </div>
           </div>
@@ -31,6 +31,7 @@
 </template>
 
 <script setup>
+import {formatDate} from "@/main.js"
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import NavBar from "../components/NavBar.vue"
