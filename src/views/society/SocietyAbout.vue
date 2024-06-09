@@ -8,14 +8,19 @@
       <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
         <div class="about">
           <h2>About</h2>
-          <div class="details"> {{ about }} </div>
+          <div class="details"> {{ about?.description }} </div>
+          <div class="no-announcements" v-if="!about">Nothing here yet...</div>
+          <div class="contact-box" v-if = "about?.email || about?.website">
+            <h2>Contact</h2>
+            <p v-if="about.email"><strong>Email:</strong> <a :href="'mailto:' + about.email">{{ about.email }}</a></p>
+            <p v-if="about.website"><strong>Website:</strong> <a :href="about.website" target="_blank" rel="noopener">{{ about.website }}</a></p>
+          </div>
         </div>
     </div>
 
     <NavBar></NavBar>
   </div>
 </template>
-
 <script setup>
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
@@ -49,14 +54,25 @@ onMounted(async () => {
   const aquerySnapshot = await getDocs(aq);
   const ares = []
   aquerySnapshot.forEach(doc => ares.push(doc.data()))
-  console.log(ares)
   about.value = ares[0].about
 })
-
 
 </script>
 
 <style scoped>
+
+.contact-box {
+  position:relative;
+  width: 90vw;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  transition: all 0.1s ease;
+  margin: 20px auto;
+  box-sizing: border-box;
+}
 
 h1 {
   height: 5rem;
