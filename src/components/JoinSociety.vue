@@ -4,18 +4,30 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from "vue"
+import { defineProps, ref, onMounted, watch } from "vue"
 import { db, uid } from '@/firebase';
 import { doc, getDoc, runTransaction } from "firebase/firestore";
-const props = defineProps({id: String, societyName: String})
-// console.log("props", props)
+const props = defineProps({ id: String, societyName: String })
+
+
+// const joined = computed(async () => {
+//   const userDoc = await getDoc(doce(db, "users", uid))
+//   return userDoc.data().societies.filter(s => s.id == props.id).length > 0
+// 
 
 const joined = ref(false)
-
-onMounted(async() => {
+// eslint-disable-next-line
+watch(() => props.id, async (newID, _) => {
   const userDoc = await getDoc(doc(db, "users", uid))
+  joined.value = userDoc.data().societies.filter(s => s.id == newID).length > 0
+
+});
+
+onMounted(async () => {
+  const userDoc = await getDoc(doc(db, "users", uid))
+  console.log(props.id)
+  // // console.log(userDoc.data().name)
   joined.value = userDoc.data().societies.filter(s => s.id == props.id).length > 0
-  // console.log(userDocRef.value)
 })
 
 async function join() {
@@ -32,14 +44,14 @@ async function join() {
       for (let s of userDoc.data().societies) {
         if (s.id !== props.id) newSocieties.push(s)
       }
-      newSocieties.push({id: props.id, name: props.societyName})
+      newSocieties.push({ id: props.id, name: props.societyName })
 
       transaction.update(doc(db, "users", uid), { societies: newSocieties });
     });
-    console.log("Transaction successfully committed!");
+    // // console.log("Transaction successfully committed!");
 
   } catch (e) {
-    console.log("Transaction failed: ", e);
+    // // console.log("Transaction failed: ", e);
   }
 }
 
@@ -60,10 +72,10 @@ async function leave() {
 
       transaction.update(doc(db, "users", uid), { societies: newSocieties });
     });
-    console.log("Transaction successfully committed!");
+    // // console.log("Transaction successfully committed!");
 
   } catch (e) {
-    console.log("Transaction failed: ", e);
+    // // console.log("Transaction failed: ", e);
   }
 }
 
