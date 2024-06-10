@@ -34,9 +34,10 @@ RouterLink {
 
 <script setup>
 import { defineProps } from 'vue';
+//eslint-disable-next-line
 const props = defineProps({societyName: String})
 
-// // console.log(props?.societyName)
+// console.log(props?.societyName)
 
 /* 
 JxiDgyZlvA4EfHASFbIn
