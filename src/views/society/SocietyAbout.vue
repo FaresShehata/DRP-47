@@ -1,23 +1,19 @@
 <template>
   <div class="app ">
-    <div v-if="!id">Something Went Wrong</div>
-
-    <div v-else>
-      <h1>{{ name }}</h1>
-      <JoinSociety :id="id" :society-name="name"></JoinSociety>
-      <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
-        <div class="about">
-          <h2>About</h2>
-          <div class="details"> {{ about?.description }} </div>
-          <div class="no-announcements" v-if="!about">Nothing here yet...</div>
-          <div class="contact-box" v-if = "about?.email || about?.website">
-            <h2>Contact</h2>
-            <p v-if="about.email"><strong>Email:</strong> <a :href="'mailto:' + about.email">{{ about.email }}</a></p>
-            <p v-if="about.website"><strong>Website:</strong> <a :href="about.website" target="_blank" rel="noopener">{{ about.website }}</a></p>
-          </div>
-        </div>
+    <h1>{{ name }}</h1>
+    <JoinSociety :id="id" :society-name="name"></JoinSociety>
+    <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
+    <div class="about">
+      <h2>About</h2>
+      <div class="details"> {{ about?.description }} </div>
+      <div class="no-announcements" v-if="!about">Nothing here yet...</div>
+      <div class="contact-box" v-if="about?.email || about?.website">
+        <h2>Contact</h2>
+        <p v-if="about.email"><strong>Email:</strong> <a :href="'mailto:' + about.email">{{ about.email }}</a></p>
+        <p v-if="about.website"><strong>Website:</strong> <a :href="about.website" target="_blank" rel="noopener">{{
+          about.website }}</a></p>
+      </div>
     </div>
-
     <NavBar></NavBar>
   </div>
 </template>
@@ -47,7 +43,10 @@ onMounted(async () => {
   const sres = []
   squerySnapshot.forEach(doc => sres.push(doc.id))
 
-  if (sres.length !== 1) return
+  if (sres.length !== 1) {
+    router.push("/invalidPage")
+    return
+  }
   id.value = sres[0]
 
   const aq = query(collection(db, "societies"), where("name", "==", name))
@@ -60,9 +59,8 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
 .contact-box {
-  position:relative;
+  position: relative;
   width: 90vw;
   padding: 20px;
   background-color: white;
@@ -90,7 +88,8 @@ h1 {
   font-weight: bold;
   margin-bottom: 1rem;
 }
-.about{
+
+.about {
   /* top: 10rem; */
   width: 90vw;
   height: calc(100vh - 11rem);
@@ -98,5 +97,4 @@ h1 {
   text-align: left;
   margin-top: 2rem;
 }
-
 </style>

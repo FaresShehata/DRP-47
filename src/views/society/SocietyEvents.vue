@@ -1,33 +1,28 @@
 <template>
   <div class="app">
-    <div v-if="!id">Something Went Wrong</div>
-
-    <div v-else>
-      <h1>{{ $route.params.name }}</h1>
-      <JoinSociety :id="id" :society-name="name"></JoinSociety>
-      <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
-      <div class="events-container">
-        <div class="events-list" v-for="event in events" :key="event.title">
-          <button @click="router.push(`/societies/${route.params.name}/events/${event.id}`)" class="event">
-            
-            <h2>{{ event.title }}</h2>
-            <div class="details">
-              <span>Capacity:</span>{{ event.capacity }}<br>
-              <span>Attending:</span>{{ event.attending }}<br>
-              <span>Date & Time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
-            </div>
-            <p>{{ event.description }}</p>
-          </button>
-        </div>
+    <h1>{{ $route.params.name }}</h1>
+    <JoinSociety :id="id" :society-name="name"></JoinSociety>
+    <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
+    <div class="events-container">
+      <div class="no-events" v-if="events.length == 0">Nothing here yet...</div>
+      <div class="events-list" v-for="event in events" :key="event.title">
+        <button @click="router.push(`/societies/${route.params.name}/events/${event.id}`)" class="event">
+          <h2>{{ event.title }}</h2>
+          <div class="details">
+            <span>Capacity:</span>{{ event.capacity }}<br>
+            <span>Attending:</span>{{ event.attending }}<br>
+            <span>Date & Time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
+          </div>
+          <p>{{ event.description }}</p>
+        </button>
       </div>
     </div>
-
     <NavBar></NavBar>
   </div>
 </template>
 
 <script setup>
-import {formatDate} from "@/main.js"
+import { formatDate } from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";
@@ -49,8 +44,10 @@ onMounted(async () => {
   const res = []
   squerySnapshot.forEach(doc => res.push(doc.id))
 
-  if (res.length !== 1) return;
-
+  if (res.length !== 1) {
+    router.push("/invalidPage")
+    return
+  }
   id.value = res[0]
   // console.log(id.value)
 
@@ -68,7 +65,6 @@ onMounted(async () => {
 
 
 <style scoped>
-
 h1 {
   height: 5rem;
   background-color: white;
@@ -102,6 +98,15 @@ h1 {
   font-weight: bold;
 }
 
+.no-events {
+  font-size: larger;
+  text-align: left;
+  color: black;
+  padding: 20px;
+  margin: auto;
+  width: min(80vw, 500px);
+}
+
 .events-container {
   /* top: 10rem; */
   width: 100vw;
@@ -110,6 +115,7 @@ h1 {
   overflow-y: auto;
   margin-top: 1rem;
 }
+
 .events-list {
   /* height: 50px; */
   top: 8rem;

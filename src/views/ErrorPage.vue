@@ -1,8 +1,7 @@
-
 <template>
-  <div>
-    <h1>404 - Page Not Found</h1>
-    <p>Sorry, the page you are looking for does not exist.</p>
+  <div class="app">
+    <h1>This page does not exist</h1>
+    <p>Try Go To Home Again</p>
     <NavBar></NavBar>
   </div>
 </template>

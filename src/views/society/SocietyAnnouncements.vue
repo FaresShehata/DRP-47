@@ -1,20 +1,16 @@
 <template>
   <div class="app">
-    <div v-if="!id">Something Went Wrong</div>
-
-    <div v-else>
-      <h1>{{ $route.params.name }}</h1>
-      <JoinSociety :id="id" :society-name="name"></JoinSociety>
-      <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
-      <div class="announcements-container">
-        <div class="no-announcements" v-if="announcements.length == 0">Nothing here yet...</div>
-        <div v-else class="announcements-list" v-for="a in announcements" :key="a.title">
-          <div class="announcement">
-            <h2>{{ a.title }}</h2>
-            <div class="details">
-              <span>Date & Time:</span>{{ formatDate(a.dateTime?.toDate()) }}<br>
-              {{ a.body }}
-            </div>
+    <h1>{{ $route.params.name }}</h1>
+    <JoinSociety :id="id" :society-name="name"></JoinSociety>
+    <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
+    <div class="announcements-container">
+      <div class="no-announcements" v-if="announcements.length == 0">Nothing here yet...</div>
+      <div v-else class="announcements-list" v-for="a in announcements" :key="a.title">
+        <div class="announcement">
+          <h2>{{ a.title }}</h2>
+          <div class="details">
+            <span>Date & Time:</span>{{ formatDate(a.dateTime?.toDate()) }}<br>
+            {{ a.body }}
           </div>
         </div>
       </div>
@@ -50,8 +46,10 @@ onMounted(async () => {
   const sres = []
   squerySnapshot.forEach(doc => sres.push(doc.id))
 
-  if (sres.length !== 1) return
-  id.value = sres[0]
+  if (sres.length !== 1) {
+    router.push("/invalidPage")
+    return
+  }  id.value = sres[0]
 
   const aq = query(collection(db, "announcements"), where("societyID", "==", id.value))
 
