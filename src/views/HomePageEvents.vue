@@ -1,8 +1,6 @@
 <template>
   <div class="app">
-    <h1>Recent Events</h1>
-   <!-- <RouterLink to="/calendar" class="calendar-button"
-    active-class="active-tab" @click="goToCalendar()"><i class="fas fa-calendar-alt"></i></RouterLink> -->
+    <h1>Upcoming Events</h1>
     <HomePageNav></HomePageNav>
     <div class="events-container">
       <div class="events-list" v-for="e in events" :key="e.id">
@@ -11,7 +9,6 @@
             <h2>{{ e.title }}</h2>
             <p class="society-name">{{ e.societyName }}</p>
           </div>
-          
           <div class="details">
             <span>Capacity:</span>{{ e.capacity }}<br>
             <span>Attending:</span>{{ e.attending }}<br>
@@ -35,7 +32,7 @@ import HomePageNav from "../components/HomePageNav.vue"
 import { onMounted, ref } from 'vue'
 import { useRouter } from "vue-router";
 import { doc, getDoc, getDocs, query, collection, where, orderBy } from "firebase/firestore";
-import { db, uid } from '@/firebase';
+import { db, uid, goToUsers } from '@/firebase';
 
 const router = useRouter()
 
@@ -45,12 +42,15 @@ const events = ref([])
 //   router.push('/calendar'); }
 
 onMounted(async () => {
+  goToUsers()
   const userDoc = await getDoc(doc(db, "users", uid))
   const societies = userDoc.data().societies
   const societyIDs = societies.map(s => s.id)
 
-  console.log(userDoc)
-
+  // // console.log(userDoc)
+  if (societyIDs.length == 0) {
+    return;
+  }
   const eq = query(
     collection(db, "events"),
     where("societyID", "in", societyIDs),
@@ -58,13 +58,13 @@ onMounted(async () => {
   )
   const equerySnapshot = await getDocs(eq);
 
-  console.log(equerySnapshot)
+  // console.log(equerySnapshot)
 
   const eres = []
   equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
 
   events.value = eres
-  console.log(eres)
+  // console.log(eres)
 
 })
 

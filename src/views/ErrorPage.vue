@@ -7,7 +7,13 @@
 </template>
 
 <script setup>
+import { goToUsers } from '@/firebase';
+import { onMounted } from "vue" 
 import NavBar from "../components/NavBar.vue"
+
+onMounted(() => {
+  goToUsers()
+})
 </script>
 
 <style scoped>

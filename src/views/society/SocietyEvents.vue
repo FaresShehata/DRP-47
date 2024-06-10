@@ -26,7 +26,7 @@ import { formatDate } from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from '@/firebase';
+import { db, /* uid, */ goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
 import JoinSociety from "../../components/JoinSociety.vue"
@@ -39,6 +39,7 @@ const id = ref("")
 const events = ref([])
 
 onMounted(async () => {
+  goToUsers()
   const sq = query(collection(db, "societies"), where("name", "==", name))
   const squerySnapshot = await getDocs(sq);
   const res = []
@@ -49,13 +50,13 @@ onMounted(async () => {
     return
   }
   id.value = res[0]
-  // console.log(id.value)
+  // // console.log(id.value)
 
   const eq = query(collection(db, "events"), where("societyID", "==", id.value))
   const equerySnapshot = await getDocs(eq);
   const eres = []
   equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
-  // console.log("eres", eres)
+  // // console.log("eres", eres)
   events.value = eres
 })
 

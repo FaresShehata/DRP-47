@@ -29,7 +29,7 @@ import {formatDate} from "@/main.js"
 import { useRoute } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, onSnapshot, query, where, /* setDoc, */ doc, runTransaction } from "firebase/firestore";
-import { db } from '@/firebase';
+import { db, /* uid, */ goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 const route = useRoute()
 
@@ -64,13 +64,13 @@ async function addAttendee() {
 
       transaction.update(eventRef, { attending: newAttending });
     });
-    console.log("Transaction successfully committed!");
+    // console.log("Transaction successfully committed!");
 
   } catch (e) {
-    console.log("Transaction failed: ", e);
+    // console.log("Transaction failed: ", e);
   }
 
-  // console.log(eventRef)
+  // // console.log(eventRef)
   // if (attending.value) {
   //   event.value.attending -= 1
   //   attending.value = false
@@ -81,10 +81,11 @@ async function addAttendee() {
   //   }
   // }
   // setDoc(eventRef, event.value)
-  // console.log("ysa")
+  // // console.log("ysa")
 }
 
 onMounted(async () => {
+  goToUsers()
 
   const q = query(collection(db, "events"), where("__name__", "==", eventid))
   onSnapshot(q, (querySnapshot) => {
@@ -95,7 +96,7 @@ onMounted(async () => {
 
     event.value = res[0]
 
-    // console.log(res)
+    // // console.log(res)
   }
   );
 })

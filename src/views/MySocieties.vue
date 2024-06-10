@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <h2>My Societies</h2>
+    <div><button @click="router.push('/chooseUser')">Go to user selection screen (Developer Tools)</button></div>
     <div class="scrollable-container">
       <div class="scrollable-list">
         <ul>
@@ -11,7 +12,7 @@
             </RouterLink>
           </li>
         </ul>
-        <p v-if="userSocieties.length === 0">You aren't part of any societies "</p>
+        <p v-if="userSocieties.length === 0">You aren't part of any societies</p>
       </div>
     </div>
     
@@ -20,12 +21,12 @@
 </template>
 
 <script setup>
-
 import NavBar from "../components/NavBar.vue"
+import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { getDoc, doc } from "firebase/firestore";
-import { db, uid } from "@/firebase";
-
+import { db, uid, goToUsers } from "@/firebase";
+const router = useRouter()
 // const mySocieties = computed(() => {
 //   return 
 
@@ -34,11 +35,11 @@ import { db, uid } from "@/firebase";
 const userSocieties = ref([]);
 
 onMounted(async () => {
-  
+  goToUsers()
   const userDoc = await getDoc(doc(db, "users", uid))
   const societies = userDoc.data().societies
   userSocieties.value = societies.sort((a, b) => b.name < a.name ? 1 : -1)
-  console.log(societies)
+  // console.log(societies)
   // const societyIDs = societies.map(s => s.id)
   
   // try {
@@ -47,7 +48,7 @@ onMounted(async () => {
   //     const userData = userDoc.data();
   //     userSocieties.value = userData.societies ? userData.societies.sort() : [];
   //   } else {
-  //     console.log("No such document!");
+  //     // console.log("No such document!");
   //   }
   // } catch (error) {
   //   console.error("Error fetching user document:", error);

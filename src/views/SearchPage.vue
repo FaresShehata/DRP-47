@@ -33,7 +33,7 @@
 import NavBar from "../components/NavBar.vue";
 import { ref, onMounted, computed } from "vue";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/firebase";
+import { db, goToUsers } from "@/firebase";
 
 const societies = ref([]);
 const categories = ref([]);
@@ -50,6 +50,7 @@ const filteredSocieties = computed(() => {
 });
 
 onMounted(async () => {
+  goToUsers()
   const querySnapshot = await getDocs(collection(db, "societies"));
   const dbSocieties = [];
   const dbCategories = new Set();
@@ -106,7 +107,7 @@ onMounted(async () => {
 .filter-container {
   padding: 20px;
   position: relative;
-  top: 3.5rem;
+  top: 1.5rem;
 
 }
 

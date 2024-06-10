@@ -1,10 +1,9 @@
 <template>
   <div class="app">
-    <div v-if="false">Something Went Wrong</div>
-
-    <div v-else>
+    <div>
+      <h1>Recent Announcements</h1>
       <div class="header">
-        <h1>Recent Announcements</h1>
+        
         <!-- <RouterLink to="/calendar" class="calendar-button"
     active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink> -->      
       </div>
@@ -38,17 +37,20 @@ import NavBar from "../components/NavBar.vue"
 import HomePageNav from "../components/HomePageNav.vue"
 import { onMounted, ref } from 'vue'
 import { doc, getDoc, getDocs, query, collection, where, orderBy } from "firebase/firestore";
-import { db, uid } from '@/firebase';
+import { db, uid, goToUsers } from '@/firebase';
 
 const announcements = ref([])
 
 onMounted(async () => {
+  goToUsers()
   const userDoc = await getDoc(doc(db, "users", uid))
-  const societies = userDoc.data().societies
-  const societyIDs = societies.map(s => s.id)
+  const societies = userDoc.data()?.societies
+  const societyIDs = societies?.map(s => s.id)
 
-  console.log(userDoc)
-
+  // // console.log(userDoc)
+  if (societyIDs.length == 0) {
+    return;
+  }
   const aq = query(
     collection(db, "announcements"),
     where("societyID", "in", societyIDs),
@@ -56,13 +58,13 @@ onMounted(async () => {
   )
   const aquerySnapshot = await getDocs(aq);
 
-  console.log(aquerySnapshot)
+  // // console.log(aquerySnapshot)
 
   const ares = []
   aquerySnapshot.forEach(doc => ares.push({ id: doc.id, ...doc.data() }))
 
   announcements.value = ares
-  console.log(ares)
+  // // console.log(ares)
 
 })
 

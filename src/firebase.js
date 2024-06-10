@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore, /* connectFirestoreEmulator */} from "firebase/firestore";
-
+import { useRouter } from "vue-router";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,8 +20,21 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 // connectFirestoreEmulator(db, '127.0.0.1', 8080);
 
-const uid = "oQJOE3DLYUiW9x2WxEeY" // online database
+let uid = "";
+//"oQJOE3DLYUiW9x2WxEeY"  online database
 // const uid = "cZVrnFwfT8iWLngs2nss" // local database
-console.log(uid)
+function setBasicUID() {
+  uid = "oQJOE3DLYUiW9x2WxEeY";
+}
+function setCommUID() {
+  uid = "cZVrnFwfT8iWLngs2nss";
+}
 
-export { db, uid }
+function goToUsers() {
+  if (!uid) {
+    useRouter().push("/chooseUser");
+  }
+}
+// // console.log(uid)
+
+export { db, uid, setBasicUID, setCommUID, goToUsers }

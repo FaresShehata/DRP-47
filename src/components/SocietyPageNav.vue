@@ -36,7 +36,7 @@ RouterLink {
 import { defineProps } from 'vue';
 const props = defineProps({societyName: String})
 
-console.log(props?.societyName)
+// // console.log(props?.societyName)
 
 /* 
 JxiDgyZlvA4EfHASFbIn

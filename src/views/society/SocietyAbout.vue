@@ -21,7 +21,7 @@
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from '@/firebase';
+import { db, goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
 import JoinSociety from "../../components/JoinSociety.vue"
@@ -33,11 +33,11 @@ const name = route.params.name
 const id = ref("")
 const about = ref("")
 
-console.log(about.value)
-console.log(router)
+// console.log(about.value)
+// console.log(router)
 
 onMounted(async () => {
-
+  goToUsers()
   const sq = query(collection(db, "societies"), where("name", "==", name))
   const squerySnapshot = await getDocs(sq);
   const sres = []
@@ -91,7 +91,8 @@ h1 {
 
 .about {
   /* top: 10rem; */
-  width: 90vw;
+  width: min(600px, 90vw);
+  padding: 2rem;
   height: calc(100vh - 11rem);
   overflow-y: auto;
   text-align: left;
