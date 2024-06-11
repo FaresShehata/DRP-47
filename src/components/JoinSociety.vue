@@ -20,7 +20,6 @@ const joined = ref(false)
 watch(() => props.id, async (newID, _) => {
   const userDoc = await getDoc(doc(db, "users", uid))
   joined.value = userDoc.data().societies.filter(s => s.id == newID).length > 0
-
 });
 
 onMounted(async () => {
@@ -83,6 +82,7 @@ async function leave() {
 
 <style scoped>
 .join {
+  all: unset;
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -92,6 +92,7 @@ async function leave() {
   color: white;
   background-color: rgb(0, 149, 246);
   border-style: none;
+  cursor: pointer;
 }
 
 .leave {

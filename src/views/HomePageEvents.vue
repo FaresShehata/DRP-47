@@ -1,6 +1,8 @@
 <template>
   <div class="app">
     <h1>Recent Events</h1>
+    <button @click="showFilteredEvents()" class="registered-button" v-if="seeingAll">All</button>
+    <button @click="showAllEvents()" class="registered-button all-button" v-if="!seeingAll">Registered</button>
    <RouterLink to="/calendar" class="calendar-button"
     active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink>
     <HomePageNav></HomePageNav>
@@ -28,8 +30,6 @@
         </button>
       </div>
     </div>
-
-
     <NavBar></NavBar>
   </div>
 </template>
@@ -42,15 +42,16 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from "vue-router";
 import { doc, getDoc, getDocs, query, collection, where, orderBy } from "firebase/firestore";
 import { db, uid, goToUsers } from '@/firebase';
+import { filterByRegistered } from "@/main.js";
 
 const router = useRouter()
-
+const allEvents = ref([])
 const events = ref([])
-
+const seeingAll = ref(true)
 // const goToCalendar = () => {
 //   router.push('/calendar'); }
 
-onMounted(async () => {
+onMounted(async() => { 
   goToUsers()
   const userDoc = await getDoc(doc(db, "users", uid))
   const societies = userDoc.data().societies
@@ -71,11 +72,23 @@ onMounted(async () => {
 
   const eres = []
   equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
-
+  allEvents.value = eres
+  console.log("allEvents.value", allEvents.value)
+  // filteredEvents.value = eres.filter(e => e.attending.includes(uid))
   events.value = eres
   // console.log(eres)
-
 })
+
+function showAllEvents() {
+  events.value = allEvents.value
+  seeingAll.value = true
+}
+
+function showFilteredEvents() {
+  events.value = filterByRegistered(allEvents, uid)
+  // events.value = filteredEvents.value
+  seeingAll.value = false
+}
 
 
 
