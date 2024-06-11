@@ -1,12 +1,13 @@
 <template>
   <div class="app">
-    <h1>Recent Events</h1>
-    <button @click="showFilteredEvents()" class="registered-button" v-if="seeingAll">All</button>
-    <button @click="showAllEvents()" class="registered-button all-button" v-if="!seeingAll">Registered</button>
+    <h1>Upcoming Events</h1>
+    <button @click="showFilteredEvents()" class="registered-button" v-if="seeingAll">See Registered</button>
+    <button @click="showAllEvents()" class="registered-button all-button" v-else>See All</button>
    <RouterLink to="/calendar" class="calendar-button"
     active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink>
     <HomePageNav></HomePageNav>
     <div class="events-container">
+      <div class="no-entries" v-if="events.length==0">You haven't joined any upcoming events. See all or go to the calendar to see what's coming up.</div>
       <div class="events-list" v-for="e in events" :key="e.id">
         <button @click="router.push(`/societies/${e.societyName}/events/${e.id}`)" class="event">
           <div class="event-title">
@@ -90,8 +91,6 @@ function showFilteredEvents() {
   seeingAll.value = false
 }
 
-
-
 </script>
 
 
@@ -109,6 +108,7 @@ h1 {
   background: none;
   text-decoration: none;
   text-align: right;
+  color: rgb(0, 149, 246);
   border: none;
   padding: 0vh;
   position: absolute;
@@ -119,7 +119,7 @@ h1 {
 }
 
 .calendar-button:hover {
-  color: #414142;
+  color: rgb(74, 190, 244);
 }
 
 .event {

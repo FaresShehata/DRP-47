@@ -37,6 +37,15 @@ body {
   transition: background-color 0.2s; /* Add a smooth transition effect */
 }
 
+.no-entries {
+  font-size: larger;
+  text-align: left;
+  color: black;
+  padding: 20px;
+  margin: auto;
+  width: min(80vw, 500px);
+}
+
 .active-tab {
   background-color: darkgrey;
   color: #333; /* White text color */

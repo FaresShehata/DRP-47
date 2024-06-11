@@ -120,6 +120,7 @@ onMounted(fetchEvents);
 .calendar {
   max-width: 800px;
   margin: auto;
+  margin-top: 1rem;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;

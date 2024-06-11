@@ -5,7 +5,7 @@
     <JoinSociety :id="id" :society-name="name"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
     <div class="announcements-container">
-      <div class="no-announcements" v-if="announcements.length == 0">Nothing here yet...</div>
+      <div class="no-announcements" v-if="announcements.length == 0">Nothing has been posted.</div>
       <div v-else class="announcements-list" v-for="a in announcements" :key="a.title">
         <div class="announcement">
           <h2>{{ a.title }}</h2>
@@ -124,7 +124,7 @@ h1 {
   /* top: 10rem; */
   width: 100vw;
   height: calc(100vh - 11rem);
-  border: 1px solid #ccc;
+  border: 0 px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
   position: relative;
