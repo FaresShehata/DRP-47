@@ -1,5 +1,6 @@
 <template>
   <div class="app ">
+    <CommitteeAction v-if="isCommittee" :id="id" :society-name="name"></CommitteeAction>
     <h1>{{ name }}</h1>
     <JoinSociety :id="id" :society-name="name"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
@@ -21,10 +22,11 @@
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, goToUsers } from '@/firebase';
+import { db, uid, goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
 import JoinSociety from "../../components/JoinSociety.vue"
+import CommitteeAction from "../../components/CommitteeAction.vue"
 const route = useRoute()
 const router = useRouter()
 
@@ -32,22 +34,27 @@ const name = route.params.name
 
 const id = ref("")
 const about = ref("")
+const isCommittee = ref(false)
 
 // console.log(about.value)
 // console.log(router)
 
 onMounted(async () => {
   goToUsers()
+
   const sq = query(collection(db, "societies"), where("name", "==", name))
   const squerySnapshot = await getDocs(sq);
-  const sres = []
-  squerySnapshot.forEach(doc => sres.push(doc.id))
+  const res = []
+  squerySnapshot.forEach(doc => res.push({id: doc.id, ...doc.data()}))
 
-  if (sres.length !== 1) {
+  if (res.length !== 1) {
     router.push("/invalidPage")
     return
   }
-  id.value = sres[0]
+
+  const data = res[0]
+  id.value = data.id
+  isCommittee.value = data.committee && data.committee.includes(uid)
 
   const aq = query(collection(db, "societies"), where("name", "==", name))
   const aquerySnapshot = await getDocs(aq);
@@ -61,7 +68,7 @@ onMounted(async () => {
 <style scoped>
 .contact-box {
   position: relative;
-  width: 90vw;
+  width: vw;
   padding: 20px;
   background-color: white;
   border: 1px solid #ddd;
@@ -91,11 +98,13 @@ h1 {
 
 .about {
   /* top: 10rem; */
+  overflow-x: hidden;
   width: min(600px, 90vw);
   padding: 2rem;
   height: calc(100vh - 11rem);
   overflow-y: auto;
   text-align: left;
   margin-top: 2rem;
+  position: relative;
 }
 </style>

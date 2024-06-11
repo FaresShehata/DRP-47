@@ -9,6 +9,9 @@ import SocietyAbout from '../views/society/SocietyAbout.vue'
 import SocietyAnnouncements from '../views/society/SocietyAnnouncements.vue'
 import ErrorPage from '../views/ErrorPage.vue'
 import ChooseUserPage from '../views/ChooseUserPage.vue'
+import NewEvent from '../views/society/committee/NewEvent.vue'
+import NewAnnouncement from '../views/society/committee/NewAnnouncement.vue'
+import EditAbout from '../views/society/committee/EditAbout.vue'
 // import CalendarMonth from '../views/CalendarComponents/CalendarMonth.vue'
 
 const routes = [
@@ -56,6 +59,21 @@ const routes = [
     path: '/societies/:name/about',
     name: 'About',
     component: SocietyAbout
+  },
+  {
+    path: '/societies/:name/new-announcement',
+    name: 'New Announcement',
+    component: NewAnnouncement
+  },
+  {
+    path: '/societies/:name/new-event',
+    name: 'New Event',
+    component: NewEvent
+  },
+  {
+    path: '/societies/:name/edit-about',
+    name: 'Edit About',
+    component: EditAbout
   },
   {
     path: '/chooseUser',

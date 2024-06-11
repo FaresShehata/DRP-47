@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <CommitteeAction v-if="isCommittee" :id="id" :society-name="name"></CommitteeAction>
     <h1>{{ $route.params.name }}</h1>
     <JoinSociety :id="id" :society-name="name"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
@@ -36,6 +37,7 @@ import { db, uid, goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
 import JoinSociety from "../../components/JoinSociety.vue"
+import CommitteeAction from "../../components/CommitteeAction.vue"
 
 const route = useRoute()
 const router = useRouter()
@@ -44,19 +46,24 @@ const name = route.params.name
 
 const id = ref("")
 const events = ref([])
+const isCommittee = ref(false)
 
 onMounted(async () => {
   goToUsers()
+
   const sq = query(collection(db, "societies"), where("name", "==", name))
   const squerySnapshot = await getDocs(sq);
   const res = []
-  squerySnapshot.forEach(doc => res.push(doc.id))
+  squerySnapshot.forEach(doc => res.push({id: doc.id, ...doc.data()}))
 
   if (res.length !== 1) {
     router.push("/invalidPage")
     return
   }
-  id.value = res[0]
+
+  const data = res[0]
+  id.value = data.id
+  isCommittee.value = data.committee && data.committee.includes(uid)
   // // console.log(id.value)
 
   const eq = query(collection(db, "events"), where("societyID", "==", id.value))
@@ -132,6 +139,7 @@ h1 {
   border: 1px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
+  position: relative;
 }
 
 .events-list {

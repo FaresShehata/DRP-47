@@ -1,13 +1,13 @@
 <template>
   <nav>
     <RouterLink to="/announcements" class="tab-link"
-    active-class="active-tab">Go To Home</RouterLink>
+    active-class="active-tab"><i class="fa-solid fa-house"></i></RouterLink>
     
     <RouterLink to='/search' class="tab-link"
-    active-class="active-tab">Search Societies</RouterLink>
+    active-class="active-tab"><i class="fa-solid fa-magnifying-glass"></i></RouterLink>
     
     <RouterLink to="/my-societies" class="tab-link"
-    active-class="active-tab">My Societies</RouterLink>
+    active-class="active-tab"><i class="fa-solid fa-users"></i></RouterLink>
   </nav>
 </template>
 
@@ -27,13 +27,17 @@ nav {
   margin: 0;
 }
 
-RouterLink {
-  /* padding: 10px 20px; */
-  font-size: 16px;
+
+.i {
+  margin: 0;
+  padding: 0;
 }
+
 </style>
 
-<script>
+<script setup>
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 // NKjrJ3Y6RIjJAouNHjH7
 // odsgQ1MWcM1KWxgPuo3e
 </script>

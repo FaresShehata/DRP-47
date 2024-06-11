@@ -27,7 +27,7 @@ body {
 .tab-link {
   /* Add your tab styling here */
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px 5px;
   margin-right: 10px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -59,5 +59,21 @@ h1 {
   display: flex;
   justify-content: space-around;
 } */
-
+.registered-button {
+  all: unset;
+  position: absolute;
+  top: 1rem;
+  font-size: min(3vw, 2vh, 20px);
+  left: 1vw;
+  width: min(22vw, 16vh);
+  height: 2rem;
+  border-radius: 1rem;
+  color: white;
+  background-color: rgb(0, 149, 246);
+  border-style: none;
+  cursor: pointer;
+}
+.all-button {
+  background-color: #333;
+}
 </style>

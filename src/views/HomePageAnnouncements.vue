@@ -5,7 +5,7 @@
       <div class="header">
         
         <!-- <RouterLink to="/calendar" class="calendar-button"
-    active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink> -->      
+    active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink>       -->
       </div>
       <HomePageNav></HomePageNav>
       <div class="announcements-container">
