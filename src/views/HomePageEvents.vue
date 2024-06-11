@@ -4,20 +4,25 @@
     <HomePageNav></HomePageNav>
     <div class="events-container">
       <div class="events-list" v-for="e in events" :key="e.id">
-        <button @click="router.push(`/societies/${e.societyName}/events/${e.id}`)"  class="event">
+        <button @click="router.push(`/societies/${e.societyName}/events/${e.id}`)" class="event">
           <div class="event-title">
             <h2>{{ e.title }}</h2>
             <p class="society-name">{{ e.societyName }}</p>
           </div>
+
           <div class="details">
             <span>Capacity:</span>{{ e.capacity }}<br>
             <span>Attending:</span>{{ e.attending.length }}<br>
             <span>Date & Time:</span>{{ formatDate(e.dateTime?.toDate()) }}<br>
             <p>{{ e.description }}</p>
-            <div v-if="e.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
-            <div v-else class="register-container"><div class="register"></div></div>
+
+            <div class="register-container">
+              <div v-if="e.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
+              <div class="register"></div>
+            </div>
+
           </div>
-          
+
         </button>
       </div>
     </div>
@@ -28,7 +33,7 @@
 </template>
 
 <script setup>
-import {formatDate} from "@/main.js"
+import { formatDate } from "@/main.js"
 import NavBar from "../components/NavBar.vue"
 import HomePageNav from "../components/HomePageNav.vue"
 import { onMounted, ref } from 'vue'
@@ -90,8 +95,10 @@ h1 {
   border: none;
   cursor: pointer;
   font-size: 24px;
-  width: 40px;  /* You can adjust this size */
-  height: 40px; /* You can adjust this size */
+  width: 40px;
+  /* You can adjust this size */
+  height: 40px;
+  /* You can adjust this size */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -103,7 +110,7 @@ h1 {
 }
 
 .calendar-button:hover {
-  color : #414142;
+  color: #414142;
 }
 
 .event {
@@ -119,6 +126,7 @@ h1 {
   width: min(80vw, 500px);
   cursor: pointer;
 }
+
 .event:hover {
   background-color: #f9f9f9;
   border-color: #bbb;
@@ -175,27 +183,25 @@ h1 {
 }
 
 .attending-indicator {
-  display: flex;
-  justify-content: space-between;
   color: green;
 }
 
 .register-container {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .register {
   text-align: right;
   --color: rgb(0, 183, 244);
   /* margin: 0; */
-  margin: 0;
+  margin-left: auto;
   padding: 0;
   width: .5rem;
-  aspect-ratio: 1;
+  height: .5rem;
   border-top: 4px solid var(--color);
   border-right: 4px solid var(--color);
   transform: rotate(45deg);
 }
-
 </style>

@@ -91,12 +91,15 @@ onMounted(async () => {
 
 <style scoped>
 .single-event {
+  text-decoration: none;
+  text-align: left;
+  color: black;
   border: 1px solid #ddd;
   padding: 20px;
-  text-align: left;
-  margin-bottom: 20px;
+  margin: auto;
+  /* margin-bottom: 20px; */
   border-radius: 5px;
-  width: min(500px, 80vw);
+  width: min(80vw, 500px);
 }
 
 .single-event .details {

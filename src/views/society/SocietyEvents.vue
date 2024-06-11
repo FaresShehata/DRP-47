@@ -14,7 +14,12 @@
             <span>Date & Time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
           </div>
           <p>{{ event.description }}</p>
-          <div v-if="event.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
+
+          <div class="register-container">
+            <div v-if="event.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
+            <div class="register"></div>
+          </div>
+
         </button>
       </div>
     </div>
@@ -90,6 +95,12 @@ h1 {
   cursor: pointer;
 }
 
+.event:hover {
+  background-color: #f9f9f9;
+  border-color: #bbb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .event h2 {
   margin-top: 0;
 }
@@ -132,9 +143,25 @@ h1 {
 }
 
 .attending-indicator {
-  display: flex;
-  justify-content: space-evenly;
   color: green;
 }
 
+.register-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.register {
+  text-align: right;
+  --color: rgb(0, 183, 244);
+  /* margin: 0; */
+  margin-left: auto;
+  padding: 0;
+  width: .5rem;
+  height: .5rem;
+  border-top: 4px solid var(--color);
+  border-right: 4px solid var(--color);
+  transform: rotate(45deg);
+}
 </style>
