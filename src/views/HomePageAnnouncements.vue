@@ -3,7 +3,6 @@
     <div>
       <h1>Recent Announcements</h1>
       <div class="header">
-        <h1>Recent Announcements</h1>
         <RouterLink to="/calendar" class="calendar-button"
     active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink>      
       </div>
