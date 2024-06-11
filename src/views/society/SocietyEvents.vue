@@ -10,10 +10,11 @@
           <h2>{{ event.title }}</h2>
           <div class="details">
             <span>Capacity:</span>{{ event.capacity }}<br>
-            <span>Attending:</span>{{ event.attending }}<br>
+            <span>Attending:</span>{{ event.attending.length }}<br>
             <span>Date & Time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
           </div>
           <p>{{ event.description }}</p>
+          <div v-if="event.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
         </button>
       </div>
     </div>
@@ -26,10 +27,11 @@ import { formatDate } from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db, /* uid, */ goToUsers } from '@/firebase';
+import { db, uid, goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
 import JoinSociety from "../../components/JoinSociety.vue"
+
 const route = useRoute()
 const router = useRouter()
 
@@ -58,6 +60,7 @@ onMounted(async () => {
   equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
   // // console.log("eres", eres)
   events.value = eres
+  console.log(events.value[0])
 })
 
 
@@ -76,9 +79,11 @@ h1 {
 .event {
   all: unset;
   text-decoration: none;
+  text-align: left;
   color: black;
   border: 1px solid #ddd;
   padding: 20px;
+  margin: auto;
   /* margin-bottom: 20px; */
   border-radius: 5px;
   width: min(80vw, 500px);
@@ -97,6 +102,7 @@ h1 {
   display: inline-block;
   min-width: 100px;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .no-events {
@@ -111,7 +117,7 @@ h1 {
 .events-container {
   /* top: 10rem; */
   width: 100vw;
-  height: calc(100vh - 11rem);
+  height: calc(100vh - 12.6rem);
   border: 1px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
@@ -124,4 +130,11 @@ h1 {
   overflow: auto;
   padding: 1rem;
 }
+
+.attending-indicator {
+  display: flex;
+  justify-content: space-evenly;
+  color: green;
+}
+
 </style>

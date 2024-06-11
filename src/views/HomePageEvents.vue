@@ -11,9 +11,11 @@
           </div>
           <div class="details">
             <span>Capacity:</span>{{ e.capacity }}<br>
-            <span>Attending:</span>{{ e.attending }}<br>
+            <span>Attending:</span>{{ e.attending.length }}<br>
             <span>Date & Time:</span>{{ formatDate(e.dateTime?.toDate()) }}<br>
-            {{ e.description }}
+            <p>{{ e.description }}</p>
+            <div v-if="e.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
+            <div v-else class="register-container"><div class="register"></div></div>
           </div>
           
         </button>
@@ -117,6 +119,11 @@ h1 {
   width: min(80vw, 500px);
   cursor: pointer;
 }
+.event:hover {
+  background-color: #f9f9f9;
+  border-color: #bbb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 .event h2 {
   margin-top: 0;
@@ -166,4 +173,29 @@ h1 {
   overflow: auto;
   padding: 1rem;
 }
+
+.attending-indicator {
+  display: flex;
+  justify-content: space-between;
+  color: green;
+}
+
+.register-container {
+  display: flex;
+  justify-content: end;
+}
+
+.register {
+  text-align: right;
+  --color: rgb(0, 183, 244);
+  /* margin: 0; */
+  margin: 0;
+  padding: 0;
+  width: .5rem;
+  aspect-ratio: 1;
+  border-top: 4px solid var(--color);
+  border-right: 4px solid var(--color);
+  transform: rotate(45deg);
+}
+
 </style>
