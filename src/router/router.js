@@ -9,7 +9,7 @@ import SocietyAbout from '../views/society/SocietyAbout.vue'
 import SocietyAnnouncements from '../views/society/SocietyAnnouncements.vue'
 import ErrorPage from '../views/ErrorPage.vue'
 import ChooseUserPage from '../views/ChooseUserPage.vue'
-// import CalendarMonth from '../views/CalendarComponents/CalendarMonth.vue'
+import Calendar from '../views/CalendarPage.vue'
 
 const routes = [
   
@@ -65,12 +65,12 @@ const routes = [
   {
     path: '/:pathMatch(.*)*',
     component: ErrorPage
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: Calendar
   }
-  // {
-  //   path: '/calendar',
-  //   name: 'Calendar',
-  //   component: CalendarMonth
-  // }
 ]
 
 const router = createRouter({

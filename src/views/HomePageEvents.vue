@@ -1,6 +1,8 @@
 <template>
   <div class="app">
-    <h1>Upcoming Events</h1>
+    <h1>Recent Events</h1>
+   <RouterLink to="/calendar" class="calendar-button"
+    active-class="active-tab"><i class="fas fa-calendar-alt"></i></RouterLink>
     <HomePageNav></HomePageNav>
     <div class="events-container">
       <div class="events-list" v-for="e in events" :key="e.id">
@@ -92,21 +94,15 @@ h1 {
 
 .calendar-button {
   background: none;
+  text-decoration: none;
+  text-align: right;
   border: none;
-  cursor: pointer;
-  font-size: 24px;
-  width: 40px;
-  /* You can adjust this size */
-  height: 40px;
-  /* You can adjust this size */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0vh;
   position: absolute;
   right: 0;
   top: 0;
   margin: 10px;
-  padding: 0;
+  font-size: min(7vw, 40px);
 }
 
 .calendar-button:hover {
