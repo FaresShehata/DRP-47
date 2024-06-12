@@ -256,6 +256,11 @@ onMounted(() => {
   padding: 2px 5px;
   border-radius: 3px;
   font-size: 0.8em;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis;
+  max-width: 100px; /* Ensure a fixed width */
+  box-sizing: border-box;
 }
 
 .user-attending {
