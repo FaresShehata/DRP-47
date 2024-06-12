@@ -51,17 +51,17 @@ body, html {
 
 .calendar-container {
   width: 100%;
-  max-width: 800px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .calendar-container {
     padding: 10px;
   }
-}
+} */
 </style>
