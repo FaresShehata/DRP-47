@@ -90,7 +90,7 @@ async function leave() {
   height: 2rem;
   border-radius: 1rem;
   color: white;
-  background-color: rgb(0, 149, 246);
+  background-color: var(--nice-blue);
   border-style: none;
   cursor: pointer;
 }

@@ -1,6 +1,9 @@
 <template>
   <div id="container" ref="container">
-    <button id="committee-action" @click="toggleOptions">+</button>
+    <button id="committee-action" @click="toggleOptions">
+      <p id="plus" v-if="!isEdit">+</p>
+      <i v-else id="edit" class="fa-solid fa-pen-to-square"></i>
+    </button>
     <div id="options" v-if="showOptions">
       <RouterLink :to="`/societies/${societyName}/new-announcement`" class="option">New Announcement</RouterLink>
       <RouterLink :to="`/societies/${societyName}/new-event`" class="option">New Event</RouterLink>
@@ -12,7 +15,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue'
 
-const props = defineProps({id: String, societyName: String})
+const props = defineProps({id: String, societyName: String, isEdit: Boolean})
 
 props.id
 
@@ -46,15 +49,25 @@ onBeforeUnmount(() => {
   z-index: 100;
 }
 
+#plus {
+  all: unset;
+}
+
+#edit {
+  font-size: 1.2rem;
+}
+
 #committee-action {
   all: unset;
-  background-color: rgb(0, 183, 244);
+  background-color: var(--nice-blue);
   color: white;
   width: 3rem;
   font-size: 2rem;
   aspect-ratio: 1;
   border-radius: 50%;
   cursor: pointer;
+  display: grid;
+  place-items: center;
 }
 
 #committee-action:hover {

@@ -1,6 +1,6 @@
 <template>
   <div class="app ">
-    <CommitteeAction v-if="isCommittee" :id="id" :society-name="name"></CommitteeAction>
+    <CommitteeAction v-if="isCommittee" :id="id" :society-name="name" is-edit></CommitteeAction>
     <h1>{{ name }}</h1>
     <JoinSociety :id="id" :society-name="name"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>

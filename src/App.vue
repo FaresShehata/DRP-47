@@ -7,6 +7,11 @@
 </script>
 
 <style>
+:root {
+  --nice-blue: rgb(0, 149, 246);
+  --hover-blue: #1991da;
+}
+
 .app {
   text-align: center;
   font-family: Arial, sans-serif;
@@ -78,11 +83,31 @@ h1 {
   height: 2rem;
   border-radius: 1rem;
   color: white;
-  background-color: rgb(0, 149, 246);
+  background-color: var(--nice-blue);
   border-style: none;
   cursor: pointer;
 }
 .all-button {
   background-color: #333;
 }
+
+.light-text {
+  color: lightslategrey;
+  font-size: 14px;
+  text-align: right;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
 </style>

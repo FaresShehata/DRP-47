@@ -17,9 +17,9 @@
             </div>
             
             <div class="details">
-              <span>Date & Time:</span>{{ formatDate(a.dateTime?.toDate()) }}<br>
-              {{ a.body }}
-            </div>
+            {{ a.body }}
+            <br><p class="light-text">{{ formatDateAnnoncement(a.dateTime?.toDate()) }}</p>
+          </div>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import {formatDate} from "@/main.js"
+import {formatDateAnnoncement} from "@/main.js"
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
 import NavBar from "../components/NavBar.vue"
@@ -77,8 +77,10 @@ onMounted(async () => {
   background: none;
   text-decoration: none;
   text-align: right;
-  color: rgb(0, 149, 246);
+  color: var(--nice-blue);
   border: none;
+  border-radius: 9999px;
+  box-shadow: 1px;
   padding: 0vh;
   position: absolute;
   right: 0;
@@ -88,7 +90,7 @@ onMounted(async () => {
 }
 
 .calendar-button:hover {
-  color: rgb(74, 190, 244);
+  color: var(--hover-blue)
 }
 
 /*
@@ -150,6 +152,7 @@ h1 {
   border: 1px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
+  scrollbar-gutter: stable;
 }
 .announcements-list {
   /* height: 50px; */

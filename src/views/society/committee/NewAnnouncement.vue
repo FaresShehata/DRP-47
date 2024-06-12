@@ -99,22 +99,21 @@ onMounted(async () => {
   isCommittee.value = data.committee && data.committee.includes(uid);
   // // console.log(id.value)
 
-  const eq = query(
-    collection(db, "events"),
-    where("societyID", "==", id.value)
-  );
-  const equerySnapshot = await getDocs(eq);
-  const eres = [];
-  equerySnapshot.forEach((doc) => eres.push({ id: doc.id, ...doc.data() }));
   // // console.log("eres", eres)
 });
 </script>
 
 <style scoped>
+.app {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
 .form-container {
   width: min(600px, 90vw);
   /* margin-top: 2rem; */
   padding: 1rem 0;
+  margin-bottom: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #fff;
@@ -168,7 +167,7 @@ form {
   font-size: 1rem;
   font-weight: bold;
   color: #fff;
-  background-color: #007bff;
+  background-color: rgb(0, 123, 255);
   border: none;
   border-radius: 4px;
   cursor: pointer;

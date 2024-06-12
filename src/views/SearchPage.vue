@@ -101,7 +101,7 @@ onMounted(async () => {
 }
 
 #search-bar:focus {
-  border-color: #1da1f2; /* Border color on focus */
+  border-color: var(--nice-blue); /* Border color on focus */
 }
 
 .filter-container {

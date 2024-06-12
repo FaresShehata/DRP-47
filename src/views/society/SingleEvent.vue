@@ -3,19 +3,35 @@
     <div v-if="!event">Something Went Wrong</div>
 
     <div v-else>
-
       <h1>This Event</h1>
       <div class="single-event">
         <div class="details">
           <h2>{{ event.title }}</h2>
           <div class="details">
-            <span>Capacity:</span>{{ event.capacity }}<br>
-            <span>Attending:</span>{{ event.attending.length }}<br>
-            <span>Date & Time:</span>{{ formatDate(event.dateTime.toDate()) }}<br>
+            <span>Capacity:</span>{{ event.capacity }}<br />
+            <span>Attending:</span>{{ event.attending.length }}<br />
+            <span>Date & Time:</span>{{ formatDate(event.dateTime.toDate())
+            }}<br />
           </div>
           <p>{{ event.description }}</p>
-          <button class="attend-button" :class="attending ? 'attending' : (fullCapacity ?  'full-capacity' : 'not-attending')" @click="addAttendee()">
-            {{ attending ? "I am no longer attending" : (fullCapacity ?  "The event is at full capacity" : "I will attend") }}
+          <button
+            class="attend-button"
+            :class="
+              attending
+                ? 'attending'
+                : fullCapacity
+                ? 'full-capacity'
+                : 'not-attending'
+            "
+            @click="addAttendee()"
+          >
+            {{
+              attending
+                ? "I am no longer attending"
+                : fullCapacity
+                ? "The event is at full capacity"
+                : "I will attend"
+            }}
           </button>
         </div>
       </div>
@@ -25,23 +41,27 @@
 </template>
 
 <script setup>
-import { formatDate } from "@/main.js"
-import { useRoute } from "vue-router"
-import { onMounted, ref } from 'vue'
-import { onSnapshot, /* setDoc, */ doc, runTransaction } from "firebase/firestore";
-import { db, uid, goToUsers } from '@/firebase';
-import NavBar from "../../components/NavBar.vue"
-const route = useRoute()
+import { formatDate } from "@/main.js";
+import { useRoute } from "vue-router";
+import { onMounted, ref } from "vue";
+import {
+  onSnapshot,
+  /* setDoc, */ doc,
+  runTransaction,
+} from "firebase/firestore";
+import { db, uid, goToUsers } from "@/firebase";
+import NavBar from "../../components/NavBar.vue";
+const route = useRoute();
 
 // const name = route.params.name
-const eventid = route.params.eventid
+const eventid = route.params.eventid;
 
-const event = ref(null)
-const attending = ref(false)
-const fullCapacity = ref(false)
+const event = ref(null);
+const attending = ref(false);
+const fullCapacity = ref(false);
 
 async function addAttendee() {
-  const eventRef = doc(db, "events", eventid)
+  const eventRef = doc(db, "events", eventid);
 
   try {
     await runTransaction(db, async (transaction) => {
@@ -50,43 +70,38 @@ async function addAttendee() {
         throw "Document does not exist!";
       }
 
-      const oldAttending = doc.data().attending
-      let newAttending = oldAttending.filter(id => id !== uid);
+      const oldAttending = doc.data().attending;
+      let newAttending = oldAttending.filter((id) => id !== uid);
 
       if (attending.value) {
-        attending.value = false
+        attending.value = false;
       } else {
         if (oldAttending.length < doc.data().capacity) {
-          newAttending.push(uid)
-          attending.value = true
+          newAttending.push(uid);
+          attending.value = true;
         }
       }
 
       transaction.update(eventRef, { attending: newAttending });
     });
     // console.log("Transaction successfully committed!");
-
   } catch (e) {
     // console.log("Transaction failed: ", e);
   }
-
-
 }
 
 onMounted(async () => {
-  goToUsers()
+  goToUsers();
 
   onSnapshot(doc(db, "events", eventid), (doc) => {
-    const data = doc.data()
-    event.value = data
-    attending.value = data.attending.includes(uid)
-    fullCapacity.value = data.attending.length >= data.capacity
+    const data = doc.data();
+    event.value = data;
+    attending.value = data.attending.includes(uid);
+    fullCapacity.value = data.attending.length >= data.capacity;
 
     // // console.log(res)
-  }
-  );
-})
-
+  });
+});
 </script>
 
 <style scoped>
@@ -125,9 +140,8 @@ onMounted(async () => {
   color: white;
 }
 
-
 .not-attending {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -143,6 +157,4 @@ onMounted(async () => {
 .attending:hover {
   background-color: #a8a8a8;
 }
-
-
 </style>

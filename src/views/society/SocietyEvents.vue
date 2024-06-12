@@ -14,7 +14,7 @@
           <div class="details">
             <span>Capacity:</span>{{ event.capacity }}<br>
             <span>Attending:</span>{{ event.attending.length }}<br>
-            <span>Date & Time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
+            <span>Event time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
           </div>
           <p>{{ event.description }}</p>
 
@@ -34,7 +34,7 @@
 import { formatDate } from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import { db, uid, goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
@@ -71,7 +71,11 @@ onMounted(async () => {
   isCommittee.value = data.committee && data.committee.includes(uid)
   // // console.log(id.value)
 
-  const eq = query(collection(db, "events"), where("societyID", "==", id.value))
+  const eq = query(
+    collection(db, "events"),
+    where("societyID", "==", id.value),
+    orderBy("dateTime", "asc")
+  )
   const equerySnapshot = await getDocs(eq);
   const eres = []
   equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
@@ -156,6 +160,7 @@ h1 {
   overflow-y: auto;
   margin-top: 1rem;
   position: relative;
+  scrollbar-gutter: stable;
 }
 
 .events-list {

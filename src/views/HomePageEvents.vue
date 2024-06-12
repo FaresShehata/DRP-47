@@ -18,7 +18,7 @@
           <div class="details">
             <span>Capacity:</span>{{ e.capacity }}<br>
             <span>Attending:</span>{{ e.attending.length }}<br>
-            <span>Date & Time:</span>{{ formatDate(e.dateTime?.toDate()) }}<br>
+            <span>Event time:</span>{{ formatDate(e.dateTime?.toDate()) }}<br>
             <p>{{ e.description }}</p>
 
             <div class="register-container">
@@ -105,10 +105,10 @@ h1 {
 } */
 
 .calendar-button {
-  background: none;
+  background: white;
   text-decoration: none;
   text-align: right;
-  color: rgb(0, 149, 246);
+  color: var(--nice-blue);
   border: none;
   padding: 0vh;
   position: absolute;
@@ -119,7 +119,7 @@ h1 {
 }
 
 .calendar-button:hover {
-  color: rgb(74, 190, 244);
+  color: var(--hover-blue);
 }
 
 .event {
@@ -181,6 +181,7 @@ h1 {
   border: 1px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
+  scrollbar-gutter: stable;
 }
 
 .events-list {
