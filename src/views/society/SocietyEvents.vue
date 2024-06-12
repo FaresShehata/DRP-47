@@ -2,10 +2,12 @@
   <div class="app">
     <CommitteeAction v-if="isCommittee" :id="id" :society-name="name"></CommitteeAction>
     <h1>{{ $route.params.name }}</h1>
+    <button @click="showFilteredEvents()" class="registered-button" v-if="seeingAll">See Registered</button>
+    <button @click="showAllEvents()" class="registered-button all-button" v-else>See All</button>
     <JoinSociety :id="id" :society-name="name"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
     <div class="events-container">
-      <div class="no-events" v-if="events.length == 0">Nothing here yet...</div>
+      <div class="no-entries" v-if="events.length == 0">Nothing here yet...</div>
       <div class="events-list" v-for="event in events" :key="event.title">
         <button @click="router.push(`/societies/${route.params.name}/events/${event.id}`)" class="event">
           <h2>{{ event.title }}</h2>
@@ -38,6 +40,7 @@ import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
 import JoinSociety from "../../components/JoinSociety.vue"
 import CommitteeAction from "../../components/CommitteeAction.vue"
+import { filterByRegistered } from "@/main.js";
 
 const route = useRoute()
 const router = useRouter()
@@ -46,7 +49,9 @@ const name = route.params.name
 
 const id = ref("")
 const events = ref([])
+const allEvents = ref([])
 const isCommittee = ref(false)
+const seeingAll = ref(true)
 
 onMounted(async () => {
   goToUsers()
@@ -71,10 +76,21 @@ onMounted(async () => {
   const eres = []
   equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
   // // console.log("eres", eres)
-  events.value = eres
+  allEvents.value = eres
+  events.value = allEvents.value
   console.log(events.value[0])
 })
 
+function showAllEvents() {
+  events.value = allEvents.value
+  seeingAll.value = true
+}
+
+function showFilteredEvents() {
+  events.value = filterByRegistered(allEvents, uid)
+  // events.value = filteredEvents.value
+  seeingAll.value = false
+}
 
 </script>
 
@@ -101,6 +117,14 @@ h1 {
   width: min(80vw, 500px);
   cursor: pointer;
 }
+.no-events {
+  font-size: larger;
+  text-align: left;
+  color: black;
+  padding: 20px;
+  margin: auto;
+  width: min(80vw, 500px);
+}
 
 .event:hover {
   background-color: #f9f9f9;
@@ -123,20 +147,12 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.no-events {
-  font-size: larger;
-  text-align: left;
-  color: black;
-  padding: 20px;
-  margin: auto;
-  width: min(80vw, 500px);
-}
 
 .events-container {
   /* top: 10rem; */
   width: 100vw;
   height: calc(100vh - 12.6rem);
-  border: 1px solid #ccc;
+  border: 0px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
   position: relative;

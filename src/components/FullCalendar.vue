@@ -171,7 +171,8 @@ onMounted(() => {
 .calendar {
   max-width: 90%;
   margin: auto;
-  padding: 10px;
+  margin-top: 1rem;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #fff;

@@ -8,6 +8,7 @@
       </div>
       <HomePageNav></HomePageNav>
       <div class="announcements-container">
+        <div class="no-entries" v-if="announcements.length==0">Nothing has been posted.</div>
         <div class="announcements-list" v-for="a in announcements" :key="a.id">
           <div class="announcement">
             <div class="announcement-title">
@@ -76,6 +77,7 @@ onMounted(async () => {
   background: none;
   text-decoration: none;
   text-align: right;
+  color: rgb(0, 149, 246);
   border: none;
   padding: 0vh;
   position: absolute;
@@ -86,7 +88,7 @@ onMounted(async () => {
 }
 
 .calendar-button:hover {
-  color: #414142;
+  color: rgb(74, 190, 244);
 }
 
 /*
