@@ -15,7 +15,6 @@
           'selected': isSameDay(day.date, selectedDate),
           'day': true
         }"
-        @click="isSameMonth(day.date, currentMonth) && selectDate(day.date)"
       >
         <span :class="{ 'today': isToday(day.date) }">{{ format(day.date, 'd') }}</span>
         <div v-if="day.events.length" class="events">
@@ -23,6 +22,7 @@
             class="event" 
             v-for="event in day.events" 
             :key="event"
+            :class="{ 'user-attending': event.userAttending }"
             @click="router.push(`/societies/${event.societyname}/events/${event.id}`)"
           >
             {{ event.title }}
@@ -37,8 +37,9 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isToday, addMonths, isSameDay, isSameMonth } from 'date-fns';
-import { db, goToUsers } from '@/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+// import { db, uid, goToUsers } from '@/firebase';
+import {db, uid, goToUsers} from '@/firebase';
+import {getDoc, doc, orderBy, collection, query, where, getDocs } from 'firebase/firestore';
 import { Timestamp } from 'firebase/firestore';
 import {useRouter} from "vue-router";
 
@@ -76,27 +77,43 @@ const nextMonth = () => {
   fetchEvents();
 };
 
-const selectDate = (date) => {
-  if (isSameMonth(date, currentMonth.value)) {
-    selectedDate.value = date;
-  }
-};
+// const selectDate = (date) => {
+//   if (isSameMonth(date, currentMonth.value)) {
+//     selectedDate.value = date;
+//   }
+// };
+
+
 
 const fetchEvents = async () => {
-  goToUsers();
   const start = startOfMonth(currentMonth.value);
   const end = endOfMonth(currentMonth.value);
-  const q = query(
-    collection(db, 'events'),
+
+  // Fetch user societies
+  const userDoc = await getDoc(doc(db, "users", uid));
+  const societies = userDoc.data()?.societies || [];
+  const societyIDs = societies.map(s => s.id);
+
+  if (societyIDs.length === 0) {
+    events.value = {};
+    return;
+  }
+
+  // Query for events in the user's societies
+  const societyEventsQuery = query(
+    collection(db, "events"),
+    where("societyID", "in", societyIDs),
     where('dateTime', '>=', Timestamp.fromDate(start)),
-    where('dateTime', '<=', Timestamp.fromDate(end))
+    where('dateTime', '<=', Timestamp.fromDate(end)),
+    orderBy("dateTime", "desc")
   );
-  const querySnapshot = await getDocs(q);
+
+  const societyEventsSnapshot = await getDocs(societyEventsQuery);
   const fetchedEvents = {};
-  querySnapshot.forEach((doc) => {
-    const data = {id: doc.id, ...doc.data()};
+  societyEventsSnapshot.forEach((doc) => {
+    const data = { id: doc.id, ...doc.data() };
     if (data.dateTime && data.dateTime instanceof Timestamp) {
-      const date = data.dateTime.toDate(); // Convert Firestore timestamp to JavaScript Date object
+      const date = data.dateTime.toDate();
       const dateStr = format(date, 'yyyy-MM-dd');
       if (!fetchedEvents[dateStr]) {
         fetchedEvents[dateStr] = [];
@@ -106,10 +123,44 @@ const fetchEvents = async () => {
       console.warn(`Invalid date format for event: ${doc.id}`, data);
     }
   });
+
+  // Query for events the user is attending
+  const attendedEventsQuery = query(
+    collection(db, 'events'),
+    where('dateTime', '>=', Timestamp.fromDate(start)),
+    where('dateTime', '<=', Timestamp.fromDate(end)), 
+    where('attending', 'array-contains', uid)
+  );
+
+  const attendedEventsSnapshot = await getDocs(attendedEventsQuery);
+  attendedEventsSnapshot.forEach((doc) => {
+    const data = { id: doc.id, ...doc.data() };
+    if (data.dateTime && data.dateTime instanceof Timestamp) {
+      const date = data.dateTime.toDate();
+      const dateStr = format(date, 'yyyy-MM-dd');
+      if (!fetchedEvents[dateStr]) {
+        fetchedEvents[dateStr] = [];
+      }
+      const existingEvent = fetchedEvents[dateStr].find(event => event.id === data.id);
+      if (existingEvent) {
+        existingEvent.userAttending = true; // Mark existing event as attended by the user
+      } else {
+        data.userAttending = true; // Mark this event as attended by the user
+        fetchedEvents[dateStr].push(data);
+      }
+    } else {
+      console.warn(`Invalid date format for event: ${doc.id}`, data);
+    }
+  });
+
   events.value = fetchedEvents;
 };
 
-onMounted(fetchEvents);
+
+onMounted(() => {
+  goToUsers();
+  fetchEvents();
+  });
 
 
 
@@ -118,9 +169,9 @@ onMounted(fetchEvents);
 
 <style scoped>
 .calendar {
-  max-width: 800px;
+  max-width: 90%;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: #fff;
@@ -132,13 +183,11 @@ onMounted(fetchEvents);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  font-family: Arial, sans-serif;
-
+  margin-bottom: 10px;
 }
 
 .nav-button {
-  padding: 10px 20px;
+  padding: 5px 10px;
   border: none;
   background-color: #007bff;
   color: white;
@@ -154,19 +203,15 @@ onMounted(fetchEvents);
 .days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  font-family: Arial, sans-serif;
-
+  gap: 5px;
 }
 
 .day-header {
-  padding: 10px;
+  padding: 5px;
   background-color: #f0f0f0;
   border-radius: 5px;
   text-align: center;
   font-weight: bold;
-  font-family: Arial, sans-serif;
-
 }
 
 .day {
@@ -177,8 +222,6 @@ onMounted(fetchEvents);
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  font-family: Arial, sans-serif;
-
 }
 
 .day:hover {
@@ -213,4 +256,37 @@ onMounted(fetchEvents);
   border-radius: 3px;
   font-size: 0.8em;
 }
+
+.user-attending {
+  background-color: #4caf50; /* Green background for user-attended events */
+  color: white; /* White text for better contrast */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-button {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .days {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .day, .day-header {
+    padding: 5px;
+    font-size: 0.8em;
+  }
+
+  .event {
+    font-size: 0.7em;
+  }
+}
+
 </style>
