@@ -121,8 +121,11 @@ onMounted(async () => {
     const data = doc.data();
     if (data) {
       event.value = data;
-    attending.value = data.attending.includes(uid);
-    fullCapacity.value = data.attending.length >= data.capacity;
+      attending.value = data.attending.includes(uid);
+      fullCapacity.value = data.attending.length >= data.capacity;
+    } else { 
+      alert("The event you were viewing no longer exists.")
+      router.replace(`/societies/${name}/events`)
     }
   });
   goToUsers();

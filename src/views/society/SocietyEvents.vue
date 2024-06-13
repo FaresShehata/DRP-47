@@ -38,7 +38,7 @@
 import { formatDate } from "@/main.js"
 import { useRoute, useRouter } from "vue-router"
 import { onMounted, ref } from 'vue'
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy, onSnapshot } from "firebase/firestore";
 import { db, uid, goToUsers } from '@/firebase';
 import NavBar from "../../components/NavBar.vue"
 import SocietyPageNav from "../../components/SocietyPageNav.vue"
@@ -79,13 +79,15 @@ onMounted(async () => {
     where("societyID", "==", id.value),
     orderBy("dateTime", "asc")
   )
-  const equerySnapshot = await getDocs(eq);
-  const eres = []
-  equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
-  // // console.log("eres", eres)
-  allEvents.value = eres
-  events.value = allEvents.value
-  console.log(events.value[0])
+  
+  onSnapshot(eq, (equerySnapshot) => {
+    const eres = []
+    equerySnapshot.forEach(doc => eres.push({ id: doc.id, ...doc.data() }))
+    // // console.log("eres", eres)
+    allEvents.value = eres
+    events.value = allEvents.value
+    console.log(events.value[0])
+  });
 })
 
 function showAllEvents() {

@@ -1,20 +1,21 @@
 <template>
   <div id="container" ref="container">
-    <button id="committee-action" @click="toggleOptions">
+    <button id="committee-action" @click="isEdit ? router.push(`/societies/${societyName}/edit-about`) : toggleOptions()">
       <p id="plus" v-if="!isEdit">+</p>
       <i v-else id="edit" class="fa-solid fa-pen-to-square"></i>
     </button>
     <div id="options" v-if="showOptions">
       <RouterLink :to="`/societies/${societyName}/new-announcement`" class="option">New Announcement</RouterLink>
       <RouterLink :to="`/societies/${societyName}/new-event`" class="option">New Event</RouterLink>
-      <RouterLink :to="`/societies/${societyName}/edit-about`" class="option">Edit About</RouterLink>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, defineProps } from 'vue'
+import { ref, onMounted, onBeforeUnmount, defineProps} from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const props = defineProps({id: String, societyName: String, isEdit: Boolean})
 
 props.id
@@ -78,6 +79,7 @@ onBeforeUnmount(() => {
   position: absolute;
   bottom: 4rem; /* Adjust this value as needed to position the options correctly */
   right: 0;
+  width: 11rem;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
