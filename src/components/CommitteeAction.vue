@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
 }
 
 #committee-action:hover {
-  background-color: #76d5f5;
+  background-color: var(--hover-blue);
 }
 
 #options {

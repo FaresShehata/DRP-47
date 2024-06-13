@@ -65,8 +65,14 @@ h1 {
   background-color: white;
   margin: 0;
   padding: 1rem;
-
 }
+
+h2 {
+  font-size: 20px;
+}
+
+
+
 /* nav {
   background-color: #e9ecef;
   padding: 1em;
@@ -88,8 +94,16 @@ h1 {
   border-style: none;
   cursor: pointer;
 }
+
+.registered-button:hover {
+  background-color: var(--hover-blue);
+}
+
 .all-button {
   background-color: #333;
+}
+.all-button:hover {
+  background-color: #222;
 }
 
 .light-text {

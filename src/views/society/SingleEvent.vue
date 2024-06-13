@@ -3,36 +3,50 @@
     <div v-if="!event">Something Went Wrong</div>
 
     <div v-else>
-      <h1>This Event</h1>
+      <h1>Event by {{ route.params.name }}</h1>
       <div class="single-event">
-        <div class="details">
+        <div class="header">
           <h2>{{ event.title }}</h2>
-          <div class="details">
-            <span>Capacity:</span>{{ event.capacity }}<br />
-            <span>Attending:</span>{{ event.attending.length }}<br />
-            <span>Date & Time:</span>{{ formatDate(event.dateTime.toDate())
-            }}<br />
-          </div>
-          <p>{{ event.description }}</p>
-          <button
-            class="attend-button"
-            :class="
-              attending
-                ? 'attending'
-                : fullCapacity
-                ? 'full-capacity'
-                : 'not-attending'
-            "
-            @click="addAttendee()"
-          >
-            {{
-              attending
-                ? "I am no longer attending"
-                : fullCapacity
-                ? "The event is at full capacity"
-                : "I will attend"
-            }}
+          <button v-if="isCommittee" @click="confirmDelete()" class="trash-button">
+            <i class="fa-regular fa-trash-can"></i>
           </button>
+        </div>
+        <div class="details">
+          <span>Capacity:</span>{{ event.capacity }}<br />
+          <span>Attending:</span>{{ event.attending.length }}<br />
+          <span>Date & Time:</span>{{ formatDate(event.dateTime.toDate())
+          }}<br/>
+        </div>
+        <p>{{ event.description }}</p>
+        <button
+          class="attend-button"
+          :class="
+            attending
+              ? 'attending'
+              : fullCapacity
+              ? 'full-capacity'
+              : 'not-attending'
+          "
+          @click="addAttendee()"
+        >
+          {{
+            attending
+              ? "I am no longer attending"
+              : fullCapacity
+              ? "The event is at full capacity"
+              : "I will attend"
+          }}
+        </button>
+      </div>
+    </div>
+    <div v-if="showConfirmDialog" class="overlay">
+      <div class="confirm-dialog">
+        <div class="confirm-dialog-content">
+          <p>Are you sure you want to delete this event?</p>
+          <div class="button-group">
+            <button @click="deleteConfirmed">Yes</button>
+            <button @click="closeDeleteWindow">No</button>
+          </div>
         </div>
       </div>
     </div>
@@ -41,9 +55,10 @@
 </template>
 
 <script setup>
-import { formatDate } from "@/main.js";
-import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { formatDate} from "@/main.js";
+import { useRoute, useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { collection, query, where, getDocs, deleteDoc } from "firebase/firestore";
 import {
   onSnapshot,
   /* setDoc, */ doc,
@@ -52,13 +67,19 @@ import {
 import { db, uid, goToUsers } from "@/firebase";
 import NavBar from "../../components/NavBar.vue";
 const route = useRoute();
+const router = useRouter();
 
-// const name = route.params.name
+const name = route.params.name;
+
 const eventid = route.params.eventid;
+const id = ref("")
 
 const event = ref(null);
 const attending = ref(false);
 const fullCapacity = ref(false);
+
+const showConfirmDialog = ref(false)
+const isCommittee = ref(false)
 
 async function addAttendee() {
   const eventRef = doc(db, "events", eventid);
@@ -90,21 +111,52 @@ async function addAttendee() {
   }
 }
 
+
+
+
 onMounted(async () => {
-  goToUsers();
 
   onSnapshot(doc(db, "events", eventid), (doc) => {
+    goToUsers();
     const data = doc.data();
-    event.value = data;
+    if (data) {
+      event.value = data;
     attending.value = data.attending.includes(uid);
     fullCapacity.value = data.attending.length >= data.capacity;
-
-    // // console.log(res)
+    }
   });
+  goToUsers();
+
+  const sq = query(collection(db, "societies"), where("name", "==", name));
+  const squerySnapshot = await getDocs(sq);
+  const res = [];
+  squerySnapshot.forEach((doc) => res.push({ id: doc.id, ...doc.data() }));
+
+
+  const data = res[0];
+  id.value = data.id;
+  isCommittee.value = data.committee && data.committee.includes(uid);
 });
+
+//Delete event functions
+
+function confirmDelete() {
+  showConfirmDialog.value = true
+}
+function deleteConfirmed() {
+  deleteDoc(doc(db, "events", eventid))
+  closeDeleteWindow()
+  router.replace(`/societies/${name}/events`)
+  
+}
+function closeDeleteWindow() {
+  showConfirmDialog.value = false
+}
 </script>
 
 <style scoped>
+
+
 .single-event {
   text-decoration: none;
   text-align: left;
@@ -115,6 +167,13 @@ onMounted(async () => {
   /* margin-bottom: 20px; */
   border-radius: 5px;
   width: min(80vw, 500px);
+
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
 }
 
 .single-event .details {
@@ -125,6 +184,11 @@ onMounted(async () => {
   display: inline-block;
   min-width: 100px;
   font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.single-event h2 {
+  margin-top: 0;
 }
 
 .attend-button {
