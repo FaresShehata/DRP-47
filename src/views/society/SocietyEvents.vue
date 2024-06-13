@@ -4,28 +4,32 @@
     <h1>{{ $route.params.name }}</h1>
     <button @click="showFilteredEvents()" class="registered-button" v-if="seeingAll">See Registered</button>
     <button @click="showAllEvents()" class="registered-button all-button" v-else>See All</button>
-    <JoinSociety :id="id" :society-name="name"></JoinSociety>
+    <JoinSociety :id="id" :society-name="name" :is-committee="isCommittee"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
     <div class="events-container">
       <div class="no-entries" v-if="events.length == 0">Nothing here yet...</div>
       <div class="events-list" v-for="event in events" :key="event.title">
-        <button @click="router.push(`/societies/${route.params.name}/events/${event.id}`)" class="event">
-          <h2>{{ event.title }}</h2>
+        <button class="event" @click="goToEvent(name, event.id)">
+          <div class="header">
+            <h2 class="pointer" >{{ event.title }}</h2>
+          </div>
           <div class="details">
             <span>Capacity:</span>{{ event.capacity }}<br>
             <span>Attending:</span>{{ event.attending.length }}<br>
             <span>Event time:</span>{{ formatDate(event.dateTime?.toDate()) }}<br>
           </div>
           <p>{{ event.description }}</p>
+          
 
           <div class="register-container">
             <div v-if="event.attending.includes(uid)" class="attending-indicator">🦕 Registered to this event </div>
             <div class="register"></div>
           </div>
-
-        </button>
+        </button> 
+        
       </div>
     </div>
+
     <NavBar></NavBar>
   </div>
 </template>
@@ -46,7 +50,6 @@ const route = useRoute()
 const router = useRouter()
 
 const name = route.params.name
-
 const id = ref("")
 const events = ref([])
 const allEvents = ref([])
@@ -96,16 +99,30 @@ function showFilteredEvents() {
   seeingAll.value = false
 }
 
+function goToEvent(name, id) {
+  router.push(`/societies/${name}/events/${id}`)
+}
 </script>
 
 
 
 <style scoped>
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  z-index: 9999;
+}
 h1 {
   height: 5rem;
   background-color: white;
   margin: 0;
   padding: 1rem;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .event {
@@ -116,10 +133,11 @@ h1 {
   border: 1px solid #ddd;
   padding: 20px;
   margin: auto;
-  /* margin-bottom: 20px; */
   border-radius: 5px;
   width: min(80vw, 500px);
   cursor: pointer;
+  z-index: 1;
+  position: relative;
 }
 .no-events {
   font-size: larger;
@@ -141,7 +159,9 @@ h1 {
 }
 
 .event .details {
+  width: 100%;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .event .details span {
@@ -155,10 +175,10 @@ h1 {
 .events-container {
   /* top: 10rem; */
   width: 100vw;
-  height: calc(100vh - 12.6rem);
+  height: calc(100vh - 13.1rem);
   border: 0px solid #ccc;
   overflow-y: auto;
-  margin-top: 1rem;
+  margin-top: 1.6rem;
   position: relative;
   scrollbar-gutter: stable;
 }
@@ -192,5 +212,12 @@ h1 {
   border-top: 4px solid var(--color);
   border-right: 4px solid var(--color);
   transform: rotate(45deg);
+}
+
+.special-button {
+  z-index: 5;
+  position: relative;
+  left: calc(min(80vw, 500px));
+  top: 5px
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="app ">
     <CommitteeAction v-if="isCommittee" :id="id" :society-name="name" is-edit></CommitteeAction>
     <h1>{{ name }}</h1>
-    <JoinSociety :id="id" :society-name="name"></JoinSociety>
+    <JoinSociety :id="id" :society-name="name" :is-committee="isCommittee"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
     <div class="about">
       <h2>About</h2>

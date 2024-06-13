@@ -6,7 +6,7 @@
       :society-name="name"
     ></CommitteeAction>
     <h1>{{ $route.params.name }}</h1>
-    <JoinSociety :id="id" :society-name="name"></JoinSociety>
+    <JoinSociety :id="id" :society-name="name" :is-committee="isCommittee"></JoinSociety>
     <SocietyPageNav :society-name="route.params.name"></SocietyPageNav>
     <div class="announcements-container">
       <div class="no-announcements" v-if="announcements.length == 0">
@@ -204,78 +204,8 @@ h1 {
   padding: 1rem;
 }
 
-.trash-button {
-  top: 0%;
-  right: 0%;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--nice-blue);
-  color: white;
-  border: none;
-  border-radius: 9999px; /* Fully rounded */
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.trash-button:hover {
-  background-color: var(--hover-blue); /* Slightly darker blue on hover */
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.confirm-dialog {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
-
-.confirm-dialog-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.confirm-dialog-content p {
-  margin-bottom: 20px;
-}
 
 
-/* New styles for button group */
-.button-group {
-  display: flex;
-  gap: 10px;
-}
 
-.button-group button {
-  margin: 0;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.button-group button:first-of-type {
-  background-color: rgb(0, 149, 246);
-  color: white;
-}
-
-.button-group button:last-of-type {
-  background-color: #ddd;
-}
 
 </style>

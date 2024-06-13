@@ -76,6 +76,7 @@ h1 {
 .registered-button {
   all: unset;
   position: absolute;
+  padding: 2px 2px;
   top: 1rem;
   font-size: min(3vw, 2vh, 20px);
   left: 1vw;
@@ -110,4 +111,63 @@ h1 {
   z-index: 1000;
 }
 
+.trash-button {
+  top: 0%;
+  right: 0%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--nice-blue);
+  color: white;
+  border: none;
+  border-radius: 9999px; /* Fully rounded */
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.trash-button:hover {
+  background-color: var(--hover-blue); /* Slightly darker blue on hover */
+}
+
+.confirm-dialog {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.confirm-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirm-dialog-content p {
+  margin-bottom: 20px;
+}
+
+/*Styles for dialog box buttons */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-group button {
+  margin: 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button-group button:first-of-type {
+  background-color: rgb(0, 149, 246);
+  color: white;
+}
+
+.button-group button:last-of-type {
+  background-color: #ddd;
+}
 </style>

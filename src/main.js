@@ -78,4 +78,8 @@ function filterByRegistered(events, uid) {
 function deleteAnnouncement(a) {
   deleteDoc(doc(db, "announcements", a.id))
 }
-export {formatDate, formatDateAnnoncement, filterByRegistered, deleteAnnouncement}
+
+function deleteEvent(e) {
+  deleteDoc(doc(db, "events", e.id))
+}
+export {formatDate, formatDateAnnoncement, filterByRegistered, deleteAnnouncement, deleteEvent}

@@ -1,5 +1,6 @@
 <template>
-  <button v-if="!joined" class="join" @click="join()">Join</button>
+  <button v-if="isCommittee" class="join admin"> Committee </button>
+  <button v-else-if="!joined" class="join" @click="join()">Join</button>
   <button v-else class="join leave" @click="leave()">Leave</button>
 </template>
 
@@ -7,7 +8,7 @@
 import { defineProps, ref, onMounted, watch } from "vue"
 import { db, uid } from '@/firebase';
 import { doc, getDoc, runTransaction } from "firebase/firestore";
-const props = defineProps({ id: String, societyName: String })
+const props = defineProps({ id: String, societyName: String, isCommittee: Boolean })
 
 
 // const joined = computed(async () => {
@@ -85,17 +86,23 @@ async function leave() {
   all: unset;
   position: absolute;
   top: 1rem;
-  right: 1rem;
-  width: 5rem;
+  right: 1vw;
+  width: min(22vw, 16vh);
   height: 2rem;
   border-radius: 1rem;
   color: white;
   background-color: var(--nice-blue);
   border-style: none;
   cursor: pointer;
+  font-size: min(3vw, 2vh, 20px);
 }
 
 .leave {
   background-color: #363636;
+}
+
+.admin {
+  cursor:auto;
+  width: 6rem;
 }
 </style>

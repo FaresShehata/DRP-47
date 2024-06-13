@@ -13,11 +13,9 @@ import NavBar from "../components/NavBar.vue"
 
 </script> -->
 <template>
-  <div id="app">
+  <div class="app">
     <NavBar />
-    <div class="calendar-container">
-      <Calendar />
-    </div>
+    <Calendar />
   </div>
 </template>
 
@@ -39,23 +37,12 @@ body, html {
   font-family: Arial, sans-serif;
 }
 
-#app {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center contents vertically */
-  align-items: center;
-  box-sizing: border-box;
-}
-
 .calendar-container {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   /* box-sizing: border-box; */
 }
 

@@ -315,7 +315,7 @@ onMounted(() => {
           'day': true
         }"
       >
-        <span :class="{ 'today': isToday(day.date) }">{{ format(day.date, 'd') }}</span>
+        <span :class="{ 'today': isToday(day.date) }" class="day-number">{{ format(day.date, 'd') }}</span>
         <div v-if="day.events.length" class="events">
           <button 
             class="event" 
@@ -453,8 +453,7 @@ onMounted(() => {
 
 <style scoped>
 .calendar {
-  margin: auto;
-  margin-top: 1rem;
+  margin-top: 0px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -473,11 +472,12 @@ onMounted(() => {
 }
 
 .nav-button {
+  width:5rem;
   padding: 5px 10px;
   border: none;
   background-color: #007bff;
   color: white;
-  border-radius: 5px;
+  border-radius: 9px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -487,10 +487,10 @@ onMounted(() => {
 }
 
 .days {
-  height: 70vh;
+  height: calc(100vh - 12rem);
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* Create 7 equal columns */
-  grid-template-rows: repeat(6, 1fr); /* Create 6 equal rows */
+  grid-template-rows: 1.7rem repeat(6, 1fr); /* Create 6 equal rows */
   gap: 5px;
 }
 
@@ -503,12 +503,11 @@ onMounted(() => {
 }
 
 .day {
-  padding: 10px;
+  padding: 2px 5px;
   border: 1px solid #eee;
   border-radius: 5px;
   background-color: #fafafa;
   text-align: center;
-  cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -537,7 +536,9 @@ onMounted(() => {
 }
 
 .events {
-  margin-top: auto; /* Push events to the bottom of the day cell */
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  margin-bottom: auto;
 }
 
 .event {
@@ -552,6 +553,7 @@ onMounted(() => {
   text-overflow: ellipsis;
   max-width: 100%; /* Ensure it fits within the day cell */
   box-sizing: border-box; /* Include padding and border in the element's total width */
+  cursor: pointer;
 }
 
 .user-attending {
@@ -559,20 +561,25 @@ onMounted(() => {
   color: white; /* White text for better contrast */
 }
 
+.day-number {
+  font-size: 0.7rem;
+  padding: 0;
+  margin: 0;
+}
 /* Responsive Design */
 @media (max-width: 600px) {
   .calendar {
-    width: 100vw; /* Use the full viewport width on small screens */
+    width: 95vw; /* Use the full viewport width on small screens */
     padding: 5px;
   }
 
-  .header {
+  /* .header {
     flex-direction: column;
     align-items: flex-start;
-  }
+  } */
 
   .nav-button {
-    width: 100%;
+    /* width: 100%; */
     margin-bottom: 5px;
   }
 
