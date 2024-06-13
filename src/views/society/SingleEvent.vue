@@ -1,5 +1,5 @@
 <template>
-  <div id="whatever" class="app">
+  <div class="app">
     <div v-if="!event">Something Went Wrong</div>
 
     <div v-else>
@@ -15,7 +15,7 @@
           <span>Capacity:</span>{{ event.capacity }}<br />
           <span>Attending:</span>{{ event.attending.length }}<br />
           <span>Date & Time:</span>{{ formatDate(event.dateTime.toDate())
-          }}<br/>
+          }}
         </div>
         <p>{{ event.description }}</p>
         <button
@@ -159,8 +159,9 @@ function closeDeleteWindow() {
 
 <style scoped>
 
-
 .single-event {
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   text-align: left;
   color: black;
@@ -170,7 +171,12 @@ function closeDeleteWindow() {
   /* margin-bottom: 20px; */
   border-radius: 5px;
   width: min(80vw, 500px);
+  max-height: 75vh;
+}
 
+.single-event > p {
+  overflow-y: scroll;
+  max-height: 40vh; 
 }
 
 .header {
