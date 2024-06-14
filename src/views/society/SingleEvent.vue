@@ -158,7 +158,6 @@ function closeDeleteWindow() {
 </script>
 
 <style scoped>
-
 .single-event {
   display: flex;
   flex-direction: column;
@@ -171,7 +170,7 @@ function closeDeleteWindow() {
   /* margin-bottom: 20px; */
   border-radius: 5px;
   width: min(80vw, 500px);
-  max-height: 75vh;
+  max-height: 60vh;
 }
 
 .single-event > p {
