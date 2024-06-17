@@ -21,13 +21,16 @@ const db = getFirestore(app);
 // connectFirestoreEmulator(db, '127.0.0.1', 8080);
 
 let uid = "";
+let userName = "";
 //"oQJOE3DLYUiW9x2WxEeY"  online database
 // const uid = "cZVrnFwfT8iWLngs2nss" // local database
 function setBasicUID() {
   uid = "oQJOE3DLYUiW9x2WxEeY";
+  userName = "Bhav"
 }
 function setCommUID() {
   uid = "cZVrnFwfT8iWLngs2nss";
+  userName = "Carlos"
 }
 
 function goToUsers() {
@@ -37,4 +40,4 @@ function goToUsers() {
 }
 // // console.log(uid)
 
-export { db, uid, setBasicUID, setCommUID, goToUsers }
+export { db, uid, userName, setBasicUID, setCommUID, goToUsers }

@@ -8,7 +8,7 @@
 
 <style>
 :root {
-  --nice-blue: rgb(0, 149, 246);
+  --nice-blue: #0095f6;
   --hover-blue: #1991da;
 }
 

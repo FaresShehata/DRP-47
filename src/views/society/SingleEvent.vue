@@ -124,7 +124,6 @@ onMounted(async () => {
       attending.value = data.attending.includes(uid);
       fullCapacity.value = data.attending.length >= data.capacity;
     } else { 
-      alert("The event you were viewing no longer exists.")
       router.replace(`/societies/${name}/events`)
     }
   });

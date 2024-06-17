@@ -1,14 +1,12 @@
 <template>
   <div class="app">
-    <h2>My Societies</h2>
-    <div><button @click="router.push('/chooseUser')">Go to user selection screen (Developer Tools)</button></div>
+    <h2>{{userName.endsWith("s") ? userName + "'" : userName + "'s"}} Societies</h2>
     <div class="scrollable-container">
       <div class="scrollable-list">
         <ul>
           <li v-for="society in userSocieties" :key="society.id" class="society-item">
             <RouterLink class="society-entry" :to="`/societies/${society.name}/events`">
               <div>{{ society.name }}</div>
-              <div>{{ society.category }}</div>
             </RouterLink>
           </li>
         </ul>
@@ -22,11 +20,10 @@
 
 <script setup>
 import NavBar from "../components/NavBar.vue"
-import { useRouter } from "vue-router";
+
 import { ref, onMounted } from "vue";
 import { getDoc, doc } from "firebase/firestore";
-import { db, uid, goToUsers } from "@/firebase";
-const router = useRouter()
+import { db, uid, userName, goToUsers } from "@/firebase";
 // const mySocieties = computed(() => {
 //   return 
 
