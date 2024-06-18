@@ -11,7 +11,7 @@
       <div class="contact-box" v-if="about?.email || about?.website">
         <h2>Contact</h2>
         <p v-if="about.email"><strong>Email:</strong> <a :href="'mailto:' + about.email">{{ about.email }}</a></p>
-        <p v-if="about.website"><strong>Website:</strong> <a :href="about.website" target="_blank" rel="noopener">{{
+        <p v-if="about.website"><strong>Website:</strong> <a :href="ensureProtocol(about.website)" target="_blank" rel="noopener">{{
           about.website }}</a></p>
       </div>
     </div>
@@ -38,6 +38,13 @@ const isCommittee = ref(false)
 
 // console.log(about.value)
 // console.log(router)
+
+function ensureProtocol(url) {
+    if (!url.match(/^https?:\/\//i)) {
+        return 'https://' + url;
+    }
+    return url;
+}
 
 onMounted(async () => {
   goToUsers()

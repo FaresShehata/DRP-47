@@ -81,13 +81,13 @@ const routes = [
     component: ChooseUserPage
   },
   {
-    path: '/:pathMatch(.*)*',
-    component: ErrorPage
-  },
-  {
     path: '/calendar',
     name: 'Calendar',
     component: Calendar
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: ErrorPage
   }
 ]
 

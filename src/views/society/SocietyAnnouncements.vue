@@ -189,11 +189,10 @@ h1 {
 .announcements-container {
   /* top: 10rem; */
   width: 100vw;
-  height: calc(100vh - 11rem);
-  border: 0 px solid #ccc;
+  height: calc(100vh - 12.6rem);
+  border: 1px solid #ccc;
   overflow-y: auto;
   margin-top: 1rem;
-  position: relative;
   scrollbar-gutter: stable;
 }
 .announcements-list {
